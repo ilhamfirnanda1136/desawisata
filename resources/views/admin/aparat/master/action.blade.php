@@ -1,0 +1,2 @@
+<button data-id="{{$model->id}}" data-jabatan="{{$model->jabatan}}" class="btn-primary btn btn-sm btn-edit"><i class="fa fa-edit"></i></button>
+<button data-hapus="{{$delete}}" class="btn-danger btn btn-sm btn-delete"><i class="fa fa-trash"></i></button>
