@@ -73,6 +73,30 @@
               </li>
           </ul>
           </li>
+          <li class="nav-item has-treeview {{request()->segment(1)=='master-project'? 'menu-open' :''}}">
+            <a href="#" class="nav-link {{request()->segment(1)=='master-project'? 'active' :''}}">
+              <i class="nav-icon fa fa-university"></i>
+              <p>
+                Project
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('project-type.index')}}" class="nav-link {{ request()->segment(2)=='project-type' ? 'active' : '' }}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Jenis Project</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('project.index')}}" class="nav-link {{ request()->segment(2)=='project' ? 'active' : '' }}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Project</p>
+                </a>
+              </li>
+          </ul>
+          </li>
+
 
         </ul>
       </nav>
@@ -80,4 +104,3 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-

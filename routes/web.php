@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
     AuthController,homeController,pendampingController,
-    wisataController,aparatDesaController
+    wisataController,aparatDesaController,
+    ProjectController,
+    ProjectTypeController
 };
 
 
@@ -44,7 +46,21 @@ Route::group(['middleware' => ['auth']], function () {
 
         /* Aparat Desa */
         Route::get('desa',[aparatDesaController::class,'index']);
-        
-
+    });
+    Route::prefix('master-project')->group(function(){
+        Route::prefix('project-type')->group(function(){
+            Route::get('/',[ProjectTypeController::class,'index'])->name('project-type.index');
+            Route::get('/json-dt',[ProjectTypeController::class,'jsonDT']);
+            Route::post('/save',[ProjectTypeController::class,'store']);
+            Route::get('/show/{projectType}',[ProjectTypeController::class,'show']);
+            Route::delete('/delete/{projectType}',[ProjectTypeController::class,'destroy']);
+        });
+        Route::prefix('project')->group(function(){
+            Route::get('/',[ProjectController::class,'index'])->name('project.index');
+            Route::get('/show/{project}',[ProjectController::class,'show']);
+            Route::get('/json-dt',[ProjectController::class,'jsonDT']);
+            Route::post('/save',[ProjectController::class,'store']);
+            Route::delete('/delete/{project}',[ProjectController::class,'destroy']);
+        });
     });
 });

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('/asset/dist/css/adminlte.min.css')}}">
+<link rel="stylesheet" href="{{ asset('asset/plugins/select2/css/select2.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link href="{{asset('lte/preloader.css')}}" rel="stylesheet">
@@ -23,6 +24,7 @@
   <link rel="stylesheet" href="{{asset('asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <link rel="stylesheet" type="text/css" href="{{asset('asset/plugins/bootstrap/css/bootstrap-datetimepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('asset/plugins/datepicker/datepicker3.css')}}">
   <link rel="stylesheet" href="{{asset('asset/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
    <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
@@ -112,6 +114,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('asset/plugins/bootstrap/js/bootstrap-datetimepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('asset/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<!-- Select2 -->
+<script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script type="text/javascript" src="https://teras.kejati-sulsel.go.id/js/dataTables_002.js"></script>
 <script src="{{asset('js/input.js')}}"></script>
