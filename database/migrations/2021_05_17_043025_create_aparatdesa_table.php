@@ -16,7 +16,7 @@ class CreateAparatdesaTable extends Migration
         Schema::create('aparatdesa', function (Blueprint $table) {
             $table->id();
             $table->integer('wisata_id');
-            $table->integer('pusat_id');
+            $table->integer('user_id');
             $table->integer('masteraparat_id');
             $table->string('nama');
             $table->string('jenis_kelamin');

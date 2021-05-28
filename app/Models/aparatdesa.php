@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class aparatdesa extends Model
 {
     use HasFactory;
+    protected $table = 'aparatdesa';
+    protected $fillable = [
+        'wisata_id',
+        'masteraparat_id',
+        'nama',
+        'jenis_kelamin',
+        'alamat',
+        'foto',
+        'user_id'
+    ];
+
+    public function wisata()
+    {
+        return $this->belongsTo(wisata::class);
+    }
+    public function masteraparat()
+    {
+        return $this->belongsTo(masteraparat::class);
+    }
 }

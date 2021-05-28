@@ -45,7 +45,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/simpan/master',[aparatDesaController::class,'simpanMaster'])->name('aparat.master.simpan');
 
         /* Aparat Desa */
-        Route::get('desa',[aparatDesaController::class,'index']);
+        Route::prefix('desa')->group(function(){
+            Route::get('/',[aparatDesaController::class,'index']);
+            Route::get('/show/{id}',[aparatDesaController::class,'show']);
+            Route::get('/json-dt',[aparatDesaController::class,'jsonDT']);
+            Route::post('/save',[aparatDesaController::class,'store']);
+            Route::delete('/delete/{aparatdesa}',[aparatDesaController::class,'destroy']);
+        });
     });
     Route::prefix('master-project')->group(function(){
         Route::prefix('project-type')->group(function(){

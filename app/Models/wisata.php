@@ -13,4 +13,9 @@ class wisata extends Model
     public function kecamatan() {
         return $this->belongsTo(kecamatan::class);
     }
+
+    public function aparatdesas()
+    {
+        return $this->hasMany(aparatdesa::class,'wisata_id');
+    }
 }
