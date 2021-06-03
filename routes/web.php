@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     AuthController,homeController,pendampingController,
     wisataController,aparatDesaController,
     ProjectController,
-    ProjectTypeController
+    ProjectTypeController,
+    UserController
 };
 
 
@@ -68,5 +69,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/save',[ProjectController::class,'store']);
             Route::delete('/delete/{project}',[ProjectController::class,'destroy']);
         });
+    });
+    Route::group(['prefix' => 'user'],function(){
+        Route::get('/',[UserController::class,'index'])->name('user.index');
+        Route::get('/json-dt',[UserController::class,'jsonDT']);
+        Route::get('/show/{id}',[UserController::class,'show']);
+        Route::post('/save',[UserController::class,'store']);
+        Route::delete('/delete/{user}',[UserController::class,'destroy']);
     });
 });

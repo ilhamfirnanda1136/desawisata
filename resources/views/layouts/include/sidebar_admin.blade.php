@@ -96,7 +96,14 @@
               </li>
           </ul>
           </li>
-
+          <li class="nav-item">
+            <a href="{{route('user.index')}}" class="nav-link {{request()->segment(1)=='user'? 'active' :''}}">
+             <i class="nav-icon fa fa-users"></i>
+              <p>
+               Users
+              </p>
+            </a>
+          </li>
 
         </ul>
       </nav>
