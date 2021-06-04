@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pusat;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -38,18 +39,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $rules = [
             'name' => 'required',
             'username' => 'required',
             'email' => 'required',
-            'password' => 'required',
             'level' => 'required',
-            'pusat_id' => 'required'
-        ]);
+            'pusat_id' => 'required',
+        ];
+        if (empty($request->id)) {
+            $rules['password'] = 'required|confirmed';
+            $rules['password_confirmation'] = 'required';
+        }else{
+            if ($request->has('password')) {
+                $rules['password'] = 'confirmed';
+                $rules['password_confirmation'] = 'required';
+            }
+        }
+        $validator = Validator::make($request->all(),$rules);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors(),'message' => 'Masukkan data user dengan benar']);
         }
-        User::updateOrCreate(['id' => $request->id],$request->all());
+        $body = $request->all();
+        $body['password'] = Hash::make($request->password);
+        User::updateOrCreate(['id' => $request->id],$body);
         $message = !empty($request->id) ? 'diubah' : 'ditambahkan';
         return response()->json(['success' => $request->all(),'message' => 'Data user berhasil '.$message]);
         
