@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     pendampingController,
     wisataController,
     aparatDesaController,
+    KegiatanController,
     ProjectController,
     ProjectTypeController,
     UserController
@@ -80,5 +81,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/show/{id}', [UserController::class, 'show']);
         Route::post('/save', [UserController::class, 'store']);
         Route::delete('/delete/{user}', [UserController::class, 'destroy']);
+    });
+    Route::group(['prefix' => 'kegiatan'], function () {
+        Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name('kegiatan.index');
+        Route::post('/save', [KegiatanController::class, 'store']);
     });
 });

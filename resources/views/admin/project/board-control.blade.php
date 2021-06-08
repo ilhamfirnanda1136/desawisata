@@ -50,7 +50,8 @@
                                 @endphp
                                 @if ($data->tgl_start <= $data->tgl_finish)
                                     @for ($i = 0; $i < $dayBetween; $i++)
-                                        <a href="" class="tgl">
+                                        <a href="{{ url('/kegiatan/' . $data->id . '/' . date('d-m-Y', strtotime('+' . $i . ' day', strtotime($data->tgl_start)))) }}"
+                                            class="tgl">
                                             {{ date('d', strtotime('+' . $i . ' day', strtotime($data->tgl_start))) }}
                                         </a>
                                     @endfor
