@@ -46,14 +46,7 @@ function removeInputFile(e) {
 async function handleSubmit(e) {
   e.preventDefault()
   const formData = new FormData(form)
-  const elFiles = []
-  const fileElement = document.querySelectorAll('input[type="file"]')
-  fileElement.forEach((el, key) => {
-    console.log(key)
-    elFiles.push(el.files[0])
-  })
-  formData.append('myfile', elFiles)
-  console.log(elFiles)
+
   try {
     const store = await axios({
       method: 'POST',

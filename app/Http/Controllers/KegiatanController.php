@@ -61,7 +61,7 @@ class KegiatanController extends Controller
             if ($file->getClientOriginalExtension() === 'pdf') {
                 $file->store('dokumen/pdf');
             } else {
-                $img = Image::make($file);
+                $img = Image::make($file->getRealPath());
                 if ($img->width() > 500) {
                     $img
                         ->resize(500, $img->height(), function ($const) {
@@ -69,10 +69,10 @@ class KegiatanController extends Controller
                         })
                         ->save(
                             storage_path() .
-                                '/' .
+                                '/app/image/dokumen_img/' .
                                 time() .
                                 '.' .
-                                $file->getClientOriginalName()
+                                $file->extension()
                         );
                 } else {
                     $file->store('image/dokumen_img');
