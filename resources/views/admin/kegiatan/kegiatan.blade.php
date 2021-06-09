@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-12 form-group">
                                     <label for="filename">Upload File Dokumen</label>
-                                    <input type="file" name="filename[]" multiple id="filename" class="form-control">
+                                    <input type="file" name="filename[]" id="filename" class="form-control">
                                     <div class="filename"></div>
                                 </div>
                                 <div id="add-input-file" class=" col-12"></div>

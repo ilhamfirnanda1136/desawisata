@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\ProjectType;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,26 +14,36 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProjectController extends Controller
 {
-
     public function index()
     {
-        return view('admin.project.project', ['project_types' => ProjectType::all()]);
+        return view('admin.project.project', [
+            'project_types' => ProjectType::all(),
+        ]);
     }
 
     public function viewBoardControl(Project $project)
     {
         // return response()->json($project);
         return view('admin.project.board-control', [
-            'data' => $project
+            'data' => $project,
         ]);
     }
 
     public function jsonDT()
     {
         $query = Project::with('projectType')->latest('id');
-        return DataTables::of($query)->addIndexColumn()
-            ->addColumn('tanggal', fn ($row) => date('d-m-Y', strtotime($row->tgl_start)) . '/' . date('d-m-Y', strtotime($row->tgl_finish)))
-            ->addColumn('action', fn ($row) => view('admin.project.action', ['model' => $row]))
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn(
+                'tanggal',
+                fn($row) => date('d-m-Y', strtotime($row->tgl_start)) .
+                    '/' .
+                    date('d-m-Y', strtotime($row->tgl_finish))
+            )
+            ->addColumn(
+                'action',
+                fn($row) => view('admin.project.action', ['model' => $row])
+            )
             ->rawColumns(['tanggal'])
             ->make(true);
     }
@@ -46,16 +59,25 @@ class ProjectController extends Controller
             'tgl_finish' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors(), 'message' => 'Masukkan data project dengan benar']);
+            return response()->json([
+                'errors' => $validator->errors(),
+                'message' => 'Masukkan data project dengan benar',
+            ]);
         }
         try {
             $body = $request->all();
             $body['user_id'] = auth()->user()->id;
             Project::updateOrCreate(['id' => $body['id']], $body);
             $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
-            return response()->json(['success' => $request->all(), 'message' => 'Data project berhasil ' . $message]);
+            return response()->json([
+                'success' => $request->all(),
+                'message' => 'Data project berhasil ' . $message,
+            ]);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage(), 'message' => 'Internal Server Error']);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Internal Server Error',
+            ]);
         }
     }
 
@@ -64,7 +86,10 @@ class ProjectController extends Controller
         try {
             return response()->json($project);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage(), 'message' => 'Internal Server Error']);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Internal Server Error',
+            ]);
         }
     }
 
@@ -72,9 +97,14 @@ class ProjectController extends Controller
     {
         try {
             $project->delete();
-            return response()->json(['message' => 'Data project berhasil dihapus']);
+            return response()->json([
+                'message' => 'Data project berhasil dihapus',
+            ]);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage(), 'message' => 'Internal Server Error']);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Internal Server Error',
+            ]);
         }
     }
 }

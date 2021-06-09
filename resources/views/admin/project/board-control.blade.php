@@ -44,11 +44,9 @@
                                 @php
                                     $start = new DateTime($data->tgl_start);
                                     $finish = new DateTime($data->tgl_finish);
-                                    $interval = DateInterval::createFromDateString('1 day');
-                                    $period = new DatePeriod($start, $interval, $finish);
-                                    $dayBetween = $start->diff($finish)->d;
+                                    $dayBetween = $start->diff($finish)->days;
                                 @endphp
-                                @if ($data->tgl_start <= $data->tgl_finish)
+                                @if ($start <= $finish)
                                     @for ($i = 0; $i < $dayBetween; $i++)
                                         <a href="{{ url('/kegiatan/' . $data->id . '/' . date('d-m-Y', strtotime('+' . $i . ' day', strtotime($data->tgl_start)))) }}"
                                             class="tgl">
@@ -58,12 +56,6 @@
                                 @endif
                             </div>
                         </div>
-                        {{-- @while ($data->tgl_start <= $data->tgl_finish)
-                            <div class="box">
-                                {{ $data->tgl_start + 1 }}
-                            </div>
-
-                        @endwhile --}}
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Image;
 
 class KegiatanController extends Controller
 {
@@ -17,7 +18,7 @@ class KegiatanController extends Controller
     {
         return view('admin.kegiatan.kegiatan', [
             'project_id' => $id,
-            'tgl_project' => $date
+            'tgl_project' => $date,
         ]);
     }
 
@@ -39,15 +40,45 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-
-        return response()->json($request->file('files'));
+        // foreach ($request->file('files') as $file) {
+        //     $arr[] = $file;
+        // }
+        // return response()->json(request()->file('filename'));
         $validator = Validator::make($request->all(), [
             'nama_kegiatan' => 'required',
             'keterangan' => 'required',
-            'nama_dokumen' => 'required'
+            'nama_dokumen' => 'required',
+            'filename' => 'required',
+            'filename.*' => 'mimes:jpg,png,jpeg,pdf',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors(), 'message' => 'Masukkan data kegiatan dengan benar']);
+            return response()->json([
+                'errors' => $validator->errors(),
+                'message' => 'Masukkan data kegiatan dengan benar',
+            ]);
+        }
+        foreach ($request->file('filename') as $file) {
+            if ($file->getClientOriginalExtension() === 'pdf') {
+                $file->store('dokumen/pdf');
+            } else {
+                $img = Image::make($file);
+                if ($img->width() > 500) {
+                    $img
+                        ->resize(500, $img->height(), function ($const) {
+                            $const->aspectRatio();
+                        })
+                        ->save(
+                            storage_path() .
+                                '/' .
+                                time() .
+                                '.' .
+                                $file->getClientOriginalName()
+                        );
+                } else {
+                    $file->store('image/dokumen_img');
+                }
+                // return response()->json(Image::make($file)->width());
+            }
         }
     }
 
