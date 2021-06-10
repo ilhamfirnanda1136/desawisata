@@ -8,6 +8,7 @@ use App\Models\Kegiatan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Image;
 use Yajra\DataTables\Facades\DataTables;
@@ -191,7 +192,14 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
+        $rowDocActivity = DokumenKegiatan::with('fileDokumenKegiatans')
+            ->where('kegiatan_id', $kegiatan->id)
+            ->first();
+        foreach ($rowDocActivity->fileDokumenKegiatans as $file) {
+            Storage::delete($file->filename);
+        }
         $kegiatan->delete();
+
         return response()->json(['messge' => 'Data kegiatan berhasil dihapus']);
     }
 }
