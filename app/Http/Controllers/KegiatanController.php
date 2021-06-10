@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DokumenKegiatan;
+use App\Models\FileDokumenKegiatan;
 use App\Models\Kegiatan;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Image;
+use Yajra\DataTables\Facades\DataTables;
 
 class KegiatanController extends Controller
 {
@@ -27,9 +32,28 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function indexDokumenKegiatan($id)
     {
-        //
+        return response()->json('ok');
+        return view('admin.kegiatan.dokumen', [
+            'data' => DokumenKegiatan::with('fileDokumenKegiatan')
+                ->where('kegiatan_id', $id)
+                ->first(),
+        ]);
+    }
+
+    public function jsonDT($project_id, $date)
+    {
+        $query = Kegiatan::where('project_id', $project_id)
+            ->where('tanggal', $date)
+            ->latest('id');
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn(
+                'action',
+                fn($row) => view('admin.kegiatan.action', ['model' => $row])
+            )
+            ->make(true);
     }
 
     /**
@@ -40,9 +64,6 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        // foreach ($request->file('files') as $file) {
-        //     $arr[] = $file;
-        // }
         // return response()->json(request()->file('filename'));
         $validator = Validator::make($request->all(), [
             'nama_kegiatan' => 'required',
@@ -57,28 +78,66 @@ class KegiatanController extends Controller
                 'message' => 'Masukkan data kegiatan dengan benar',
             ]);
         }
+        $body = $request->all();
+        $body['doc'] = [];
         foreach ($request->file('filename') as $file) {
             if ($file->getClientOriginalExtension() === 'pdf') {
-                $file->store('dokumen/pdf');
+                $doc = $file->storeAs(
+                    'dokumen/pdf',
+                    $file->getClientOriginalName()
+                );
             } else {
                 $img = Image::make($file->getRealPath());
                 if ($img->width() > 500) {
+                    $path =
+                        storage_path() .
+                        '/app/public/image/dokumen_img/' .
+                        time() .
+                        '.' .
+                        $file->extension();
                     $img
                         ->resize(500, $img->height(), function ($const) {
                             $const->aspectRatio();
                         })
-                        ->save(
-                            storage_path() .
-                                '/app/image/dokumen_img/' .
-                                time() .
-                                '.' .
-                                $file->extension()
-                        );
+                        ->save($path);
+                    $doc = $img;
                 } else {
-                    $file->store('image/dokumen_img');
+                    $doc = $file->store('image/dokumen_img');
                 }
                 // return response()->json(Image::make($file)->width());
             }
+            array_push($body['doc'], $doc);
+        }
+        DB::beginTransaction();
+        try {
+            $saveKegiatan = Kegiatan::updateOrCreate(
+                ['id' => $body['id']],
+                [
+                    'project_id' => $body['project_id'],
+                    'tanggal' => $body['tanggal'],
+                    'nama_kegiatan' => $body['nama_kegiatan'],
+                    'keterangan' => $body['keterangan'],
+                ]
+            );
+            $saveDoc = DokumenKegiatan::create([
+                'kegiatan_id' => $saveKegiatan->id,
+                'nama_dokumen' => $body['nama_dokumen'],
+            ]);
+            foreach ($body['doc'] as $file) {
+                FileDokumenKegiatan::create([
+                    'dokumen_kegiatan_id' => $saveDoc->id,
+                    'filename' => $file,
+                ]);
+            }
+            DB::commit();
+            $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
+            return response()->json([
+                'success' => $request->all(),
+                'message' => 'Data kegiatan berhasil ' . $message,
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json($e->getMessage());
         }
     }
 
@@ -88,9 +147,17 @@ class KegiatanController extends Controller
      * @param  \App\Models\Kegiatan  $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function show(Kegiatan $kegiatan)
+    public function show($id)
     {
-        //
+        $data = DokumenKegiatan::with(['fileDokumenKegiatans'])
+            ->where('kegiatan_id', $id)
+            ->first();
+        // dd($data);
+        // return response()->json($data);
+        return view('admin.kegiatan.dokumen', [
+            'data' => $data,
+            'files' => $data->fileDokumenKegiatans,
+        ]);
     }
 
     /**
@@ -124,6 +191,7 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
-        //
+        $kegiatan->delete();
+        return response()->json(['messge' => 'Data kegiatan berhasil dihapus']);
     }
 }

@@ -13,7 +13,7 @@ use App\Http\Controllers\{
     ProjectTypeController,
     UserController
 };
-
+use App\Models\Kegiatan;
 
 Route::get('/', function () {
     return redirect('login');
@@ -30,9 +30,18 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* Pendamping */
     Route::get('pendamping', [pendampingController::class, 'index']);
-    Route::get('pendamping/table', [pendampingController::class, 'tablePendamping']);
-    Route::post('simpan/pendamping', [pendampingController::class, 'simpanPendamping']);
-    Route::get('pendamping/hapus/{id}', [pendampingController::class, 'hapusPendamping']);
+    Route::get('pendamping/table', [
+        pendampingController::class,
+        'tablePendamping',
+    ]);
+    Route::post('simpan/pendamping', [
+        pendampingController::class,
+        'simpanPendamping',
+    ]);
+    Route::get('pendamping/hapus/{id}', [
+        pendampingController::class,
+        'hapusPendamping',
+    ]);
 
     /* Desa Wisata */
     Route::get('wisata', [wisataController::class, 'index']);
@@ -42,12 +51,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('wisata/hapus/{id}', [wisataController::class, 'hapusWisata']);
 
     Route::prefix('aparat')->group(function () {
-
         /* Master Jabatan */
         Route::get('master', [aparatDesaController::class, 'indexMaster']);
-        Route::get('/master/table', [aparatDesaController::class, 'tableMaster'])->name('aparat.master.table');
-        Route::get('/master/hapus/{id}', [aparatDesaController::class, 'hapusMaster'])->name('aparat.master.hapus');
-        Route::post('/simpan/master', [aparatDesaController::class, 'simpanMaster'])->name('aparat.master.simpan');
+        Route::get('/master/table', [
+            aparatDesaController::class,
+            'tableMaster',
+        ])->name('aparat.master.table');
+        Route::get('/master/hapus/{id}', [
+            aparatDesaController::class,
+            'hapusMaster',
+        ])->name('aparat.master.hapus');
+        Route::post('/simpan/master', [
+            aparatDesaController::class,
+            'simpanMaster',
+        ])->name('aparat.master.simpan');
 
         /* Aparat Desa */
         Route::prefix('desa')->group(function () {
@@ -55,24 +72,43 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/show/{id}', [aparatDesaController::class, 'show']);
             Route::get('/json-dt', [aparatDesaController::class, 'jsonDT']);
             Route::post('/save', [aparatDesaController::class, 'store']);
-            Route::delete('/delete/{aparatdesa}', [aparatDesaController::class, 'destroy']);
+            Route::delete('/delete/{aparatdesa}', [
+                aparatDesaController::class,
+                'destroy',
+            ]);
         });
     });
     Route::prefix('master-project')->group(function () {
         Route::prefix('project-type')->group(function () {
-            Route::get('/', [ProjectTypeController::class, 'index'])->name('project-type.index');
+            Route::get('/', [ProjectTypeController::class, 'index'])->name(
+                'project-type.index'
+            );
             Route::get('/json-dt', [ProjectTypeController::class, 'jsonDT']);
             Route::post('/save', [ProjectTypeController::class, 'store']);
-            Route::get('/show/{projectType}', [ProjectTypeController::class, 'show']);
-            Route::delete('/delete/{projectType}', [ProjectTypeController::class, 'destroy']);
+            Route::get('/show/{projectType}', [
+                ProjectTypeController::class,
+                'show',
+            ]);
+            Route::delete('/delete/{projectType}', [
+                ProjectTypeController::class,
+                'destroy',
+            ]);
         });
         Route::prefix('project')->group(function () {
-            Route::get('/', [ProjectController::class, 'index'])->name('project.index');
+            Route::get('/', [ProjectController::class, 'index'])->name(
+                'project.index'
+            );
             Route::get('/show/{project}', [ProjectController::class, 'show']);
             Route::get('/json-dt', [ProjectController::class, 'jsonDT']);
-            Route::get('/board-control/{project}', [ProjectController::class, 'viewBoardControl'])->name('project.board');
+            Route::get('/board-control/{project}', [
+                ProjectController::class,
+                'viewBoardControl',
+            ])->name('project.board');
             Route::post('/save', [ProjectController::class, 'store']);
-            Route::delete('/delete/{project}', [ProjectController::class, 'destroy']);
+            Route::delete('/delete/{project}', [
+                ProjectController::class,
+                'destroy',
+            ]);
         });
     });
     Route::group(['prefix' => 'user'], function () {
@@ -83,7 +119,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/delete/{user}', [UserController::class, 'destroy']);
     });
     Route::group(['prefix' => 'kegiatan'], function () {
-        Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name('kegiatan.index');
+        Route::get('/dokumen/{id}', [KegiatanController::class, 'show'])->name(
+            'kegiatan.show'
+        );
+        Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name(
+            'kegiatan.index'
+        );
+        Route::get('/{project_id}/{date}/json-dt', [
+            KegiatanController::class,
+            'jsonDT',
+        ]);
+        Route::delete('/delete/{kegiatan}', [
+            KegiatanController::class,
+            'destroy',
+        ]);
         Route::post('/save', [KegiatanController::class, 'store']);
     });
 });

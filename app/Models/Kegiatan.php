@@ -14,28 +14,11 @@ class Kegiatan extends Model
         'project_id',
         'tanggal',
         'nama_kegiatan',
-        'keterangan'
+        'keterangan',
     ];
 
-    public function saveActivity($body)
+    public function dokumenKegiatans()
     {
-        DB::beginTransaction();
-        try {
-            $saveKegiatan = self::updateOrCreate(['id' => $body['id']], [
-                'project_id' => $body['project_id'],
-                'tanggal' => $body['tanggal'],
-                'nama_kegiatan' => $body['nama_kegiatan'],
-                'keterangan' => $body['keterangan']
-            ]);
-            $saveDoc = DokumenKegiatan::create([
-                'kegiatan_id' => $saveKegiatan->id,
-                'nama_dokumen' => $body['nama_dokumen']
-            ]);
-            DB::table('file_dokumen_kegiatan')->insert([]);
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
+        return $this->hasMany(DokumenKegiatan::class);
     }
 }

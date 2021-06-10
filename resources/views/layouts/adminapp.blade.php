@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="{{asset('asset/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
    <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('asset/plugins/ekko-lightbox/ekko-lightbox.css') }}">
    <link rel="stylesheet" type="text/css" href="https://teras.kejati-sulsel.go.id/css/responsive.css">
    <style>
    .user-panel img{
@@ -119,6 +120,7 @@
 <script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script type="text/javascript" src="https://teras.kejati-sulsel.go.id/js/dataTables_002.js"></script>
+<script src="{{ asset('asset/plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
 <script src="{{asset('js/input.js')}}"></script>
 <script type="text/javascript">
  const process_env_url = "{{ url('') }}";
