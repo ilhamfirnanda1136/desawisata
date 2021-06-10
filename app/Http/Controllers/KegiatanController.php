@@ -71,7 +71,7 @@ class KegiatanController extends Controller
             'keterangan' => 'required',
             'nama_dokumen' => 'required',
             'filename' => 'required',
-            'filename.*' => 'mimes:jpg,png,jpeg,pdf',
+            /* 'filename.*' => 'mimes:jpg,png,jpeg,pdf', */
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -81,6 +81,7 @@ class KegiatanController extends Controller
         }
         $body = $request->all();
         $body['doc'] = [];
+        /* return response()->json(storage_path()); */
         foreach ($request->file('filename') as $file) {
             if ($file->getClientOriginalExtension() === 'pdf') {
                 $doc = $file->storeAs(
@@ -93,15 +94,13 @@ class KegiatanController extends Controller
                     $path =
                         storage_path() .
                         '/app/public/image/dokumen_img/' .
-                        time() .
-                        '.' .
-                        $file->extension();
+                        $file->getClientOriginalName();
                     $img
                         ->resize(500, $img->height(), function ($const) {
                             $const->aspectRatio();
                         })
                         ->save($path);
-                    $doc = $img;
+                    $doc = 'image/dokumen_img/'.$file->getClientOriginalName();
                 } else {
                     $doc = $file->store('image/dokumen_img');
                 }
