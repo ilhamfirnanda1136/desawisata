@@ -15,7 +15,13 @@ class Kegiatan extends Model
         'tanggal',
         'nama_kegiatan',
         'keterangan',
+        'prosentase_capaian'
     ];
+
+    public function laporanKeuangan()
+    {
+        return $this->hasOne(LaporanKeuangan::class);
+    }
 
     public function dokumenKegiatans()
     {

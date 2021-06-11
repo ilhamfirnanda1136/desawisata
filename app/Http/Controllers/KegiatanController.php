@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DokumenKegiatan;
 use App\Models\FileDokumenKegiatan;
 use App\Models\Kegiatan;
+use App\Models\LaporanKeuangan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,21 +26,6 @@ class KegiatanController extends Controller
         return view('admin.kegiatan.kegiatan', [
             'project_id' => $id,
             'tgl_project' => $date,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexDokumenKegiatan($id)
-    {
-        return response()->json('ok');
-        return view('admin.kegiatan.dokumen', [
-            'data' => DokumenKegiatan::with('fileDokumenKegiatan')
-                ->where('kegiatan_id', $id)
-                ->first(),
         ]);
     }
 
@@ -71,7 +57,11 @@ class KegiatanController extends Controller
             'keterangan' => 'required',
             'nama_dokumen' => 'required',
             'filename' => 'required',
-            /* 'filename.*' => 'mimes:jpg,png,jpeg,pdf', */
+            'filename.*' => 'mimes:jpg,png,jpeg,pdf',
+            'prosentase_capaian' => 'required',
+            'tgl' => 'required',
+            'pengeluaran' => 'required',
+            'bukti_pengeluaran' => 'required|mimes:jpg,png,jpeg',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -81,7 +71,7 @@ class KegiatanController extends Controller
         }
         $body = $request->all();
         $body['doc'] = [];
-        /* return response()->json(storage_path()); */
+        /* return response()->json($body); */
         foreach ($request->file('filename') as $file) {
             if ($file->getClientOriginalExtension() === 'pdf') {
                 $doc = $file->storeAs(
@@ -117,6 +107,7 @@ class KegiatanController extends Controller
                     'tanggal' => $body['tanggal'],
                     'nama_kegiatan' => $body['nama_kegiatan'],
                     'keterangan' => $body['keterangan'],
+                    'prosentase_capaian' => $body['prosentase_capaian'],
                 ]
             );
             $saveDoc = DokumenKegiatan::create([
@@ -129,6 +120,12 @@ class KegiatanController extends Controller
                     'filename' => $file,
                 ]);
             }
+            LaporanKeuangan::create([
+                'kegiatan_id' => $saveKegiatan->id,
+                'tgl' => $body['tgl'],
+                'pengeluaran' => $body['pengeluaran'],
+                'bukti_pengeluaran' => $request->file('bukti_pengeluaran')->store('image/pengeluaran')
+            ]);
             DB::commit();
             $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
             return response()->json([
@@ -161,14 +158,16 @@ class KegiatanController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show detail financial statement.
      *
      * @param  \App\Models\Kegiatan  $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kegiatan $kegiatan)
+    public function showFinancialStatement($project_id)
     {
-        //
+        return view('admin.kegiatan.laporan_keuangan',[
+            'data' => LaporanKeuangan::with('kegiatan')->where('kegiatan_id',$project_id)->first()
+        ]);
     }
 
     /**

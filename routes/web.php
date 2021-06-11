@@ -13,7 +13,6 @@ use App\Http\Controllers\{
     ProjectTypeController,
     UserController
 };
-use App\Models\Kegiatan;
 
 Route::get('/', function () {
     return redirect('login');
@@ -122,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dokumen/{id}', [KegiatanController::class, 'show'])->name(
             'kegiatan.show'
         );
+        Route::get('/{project_id}/keuangan',[KegiatanController::class,'showFinancialStatement'])->name('kegiatan.financial');
         Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name(
             'kegiatan.index'
         );

@@ -1,3 +1,6 @@
+<a href="{{ route('kegiatan.financial', $model->id) }}" class="btn btn-info">
+    <i class="fa fa-file-text-o"></i>
+</a>
 <a href="{{ route('kegiatan.show', $model->id) }}" class="btn btn-success">
     <i class="fa fa-file"></i>
 </a>
