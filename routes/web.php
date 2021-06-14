@@ -28,7 +28,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('home', [homeController::class, 'index'])->name('home');
 
     /* Pendamping */
-    Route::get('pendamping', [pendampingController::class, 'index']);
+    Route::get('pendamping', [pendampingController::class, 'index'])->name(
+        'pendamping.index'
+    );
     Route::get('pendamping/table', [
         pendampingController::class,
         'tablePendamping',
@@ -43,7 +45,9 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     /* Desa Wisata */
-    Route::get('wisata', [wisataController::class, 'index']);
+    Route::get('wisata', [wisataController::class, 'index'])->name(
+        'wisata.index'
+    );
     Route::get('wisata/table', [wisataController::class, 'tableWisata']);
     Route::get('ambil/wisata/{id}', [wisataController::class, 'ambilWisata']);
     Route::post('simpan/wisata', [wisataController::class, 'simpanWisata']);
@@ -67,7 +71,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         /* Aparat Desa */
         Route::prefix('desa')->group(function () {
-            Route::get('/', [aparatDesaController::class, 'index']);
+            Route::get('/', [aparatDesaController::class, 'index'])->name(
+                'aparat.index'
+            );
             Route::get('/show/{id}', [aparatDesaController::class, 'show']);
             Route::get('/json-dt', [aparatDesaController::class, 'jsonDT']);
             Route::post('/save', [aparatDesaController::class, 'store']);
@@ -121,7 +127,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dokumen/{id}', [KegiatanController::class, 'show'])->name(
             'kegiatan.show'
         );
-        Route::get('/{project_id}/keuangan',[KegiatanController::class,'showFinancialStatement'])->name('kegiatan.financial');
+        Route::get('/{project_id}/keuangan', [
+            KegiatanController::class,
+            'showFinancialStatement',
+        ])->name('kegiatan.financial');
         Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name(
             'kegiatan.index'
         );

@@ -75,7 +75,7 @@
           </li>
           <li class="nav-item has-treeview {{request()->segment(1)=='master-project'? 'menu-open' :''}}">
             <a href="#" class="nav-link {{request()->segment(1)=='master-project'? 'active' :''}}">
-              <i class="nav-icon fa fa-university"></i>
+              <i class="nav-icon fa fa-tasks"></i>
               <p>
                 Project
                 <i class="fa fa-angle-left right"></i>
