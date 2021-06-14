@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 form-group">
                                     <label class="tgl">Tanggal Pengeluaran</label>
-                                    <input type="text" name="tgl" id="tgl" class="form-control"/>
+                                    <input type="date" name="tgl" id="tgl" class="form-control"/>
                                     <div class="tgl"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 form-group">
