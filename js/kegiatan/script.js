@@ -16,6 +16,7 @@ function loadTable() {
             { data: 'DT_RowIndex', name: 'id' },
             { data: 'nama_kegiatan', name: 'nama_kegiatan' },
             { data: 'keterangan', name: 'keterangan' },
+            { data: 'prosentase_capaian', name: 'prosentase_capaian' },
             { data: 'action', name: 'action' },
         ],
         destroy: true,

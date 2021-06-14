@@ -112,6 +112,7 @@
                                 <th class="text-center">#</th>
                                 <th>Nama Kegiatan</th>
                                 <th>Keterangan</th>
+                                <th>Prosentas Capaian</th>
                                 <th>AKSI</th>
                             </thead>
                         </table>
