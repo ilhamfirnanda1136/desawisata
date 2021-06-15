@@ -15,8 +15,12 @@ class CreateLaporanKeuangansTable extends Migration
     {
         Schema::create('laporan_keuangan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kegiatan_id')->constrained('kegiatan')->onUpadate('restrict')->onDelete('cascade');
-            $table->string('tgl',20);
+            $table
+                ->foreignId('kegiatan_id')
+                ->constrained('kegiatan')
+                ->onUpadate('restrict')
+                ->onDelete('cascade');
+            $table->date('tgl');
             $table->string('pengeluaran');
             $table->string('bukti_pengeluaran');
             $table->timestamps();

@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     wisataController,
     aparatDesaController,
     KegiatanController,
+    MapController,
     ProjectController,
     ProjectTypeController,
     UserController
@@ -52,6 +53,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ambil/wisata/{id}', [wisataController::class, 'ambilWisata']);
     Route::post('simpan/wisata', [wisataController::class, 'simpanWisata']);
     Route::get('wisata/hapus/{id}', [wisataController::class, 'hapusWisata']);
+    Route::get('wisata/all-data', [wisataController::class, 'wisataAll'])->name(
+        'wisata.all'
+    );
 
     Route::prefix('aparat')->group(function () {
         /* Master Jabatan */
@@ -143,5 +147,8 @@ Route::group(['middleware' => ['auth']], function () {
             'destroy',
         ]);
         Route::post('/save', [KegiatanController::class, 'store']);
+    });
+    Route::prefix('peta')->group(function () {
+        Route::get('/', [MapController::class, 'index'])->name('map.index');
     });
 });

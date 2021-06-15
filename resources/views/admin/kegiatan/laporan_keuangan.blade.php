@@ -7,7 +7,7 @@
             <div class="col-12 card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Laporan Keuangan {{ $data->tgl }}</h3>
+                        <h3 class="card-title">Laporan Keuangan {{ date('d-m-Y',strtotime($data->tgl)) }}</h3>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">
                             <i class="fa fa-arrow-left"></i>
                             Kembali

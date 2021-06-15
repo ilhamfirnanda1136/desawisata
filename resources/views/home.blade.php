@@ -74,18 +74,6 @@
           <a href="{{ route('project.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-md-4 col-sm-12">
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>{{ $jenis_project }}</h3>
-            <p>Jenis Project</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-tasks"></i>
-          </div>
-          <a href="{{ route('project-type.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
     </div>
   </div>
 </div>

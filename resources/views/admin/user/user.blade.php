@@ -76,7 +76,9 @@
               <label>Level</label>
               <select name="level" id="level" class="form-control" class="forn-control">
                 <option value="" selected disabled>-Pilih-</option>
+                @if (auth()->user()->level == 1)
                 <option value="1">DPP</option>
+                @endif
                 <option value="2">DPD</option>
                 <option value="3">Pendamping</option>
               </select>

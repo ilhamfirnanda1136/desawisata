@@ -18,17 +18,26 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.user',[
-            'pusat' => Pusat::all()
+        return view('admin.user.user', [
+            'pusat' => Pusat::all(),
         ]);
     }
 
     public function jsonDT()
     {
-        $query = User::with('pusat')->latest('id');
-        return DataTables::of($query)->addIndexColumn()
-        ->addColumn('action',fn($row) => view('admin.user.action',['model' => $row]))
-        ->make(true);
+        $query = $query =
+            auth()->user()->level == 1
+                ? User::with('pusat')->latest('id')
+                : User::with('pusat')
+                    ->where('pusat_id', auth()->user()->pusat_id)
+                    ->latest('id');
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn(
+                'action',
+                fn($row) => view('admin.user.action', ['model' => $row])
+            )
+            ->make(true);
     }
 
     /**
@@ -49,23 +58,28 @@ class UserController extends Controller
         if (empty($request->id)) {
             $rules['password'] = 'required|confirmed';
             $rules['password_confirmation'] = 'required';
-        }else{
+        } else {
             if ($request->has('password')) {
                 $rules['password'] = 'confirmed';
                 $rules['password_confirmation'] = 'required';
             }
         }
-        $validator = Validator::make($request->all(),$rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors(),'message' => 'Masukkan data user dengan benar']);
+            return response()->json([
+                'errors' => $validator->errors(),
+                'message' => 'Masukkan data user dengan benar',
+            ]);
         }
         $body = $request->all();
         $body['password'] = Hash::make($request->password);
-        User::updateOrCreate(['id' => $request->id],$body);
+        User::updateOrCreate(['id' => $request->id], $body);
         $message = !empty($request->id) ? 'diubah' : 'ditambahkan';
-        return response()->json(['success' => $request->all(),'message' => 'Data user berhasil '.$message]);
-        
+        return response()->json([
+            'success' => $request->all(),
+            'message' => 'Data user berhasil ' . $message,
+        ]);
     }
 
     /**

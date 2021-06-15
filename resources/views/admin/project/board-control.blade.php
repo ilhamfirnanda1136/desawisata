@@ -40,7 +40,9 @@
                     </div>
                     <div class="card-body">
                         <div class="center">
+                            <h3 class="text-center"><b>Tanggal Project</b></h3>
                             <div class="d-flex flex-wrap justify-content-center">
+                                
                                 @php
                                     $start = new DateTime($data->tgl_start);
                                     $finish = new DateTime($data->tgl_finish);
@@ -50,7 +52,7 @@
                                     @for ($i = 0; $i < $dayBetween; $i++)
                                         <a href="{{ url('/kegiatan/' . $data->id . '/' . date('d-m-Y', strtotime('+' . $i . ' day', strtotime($data->tgl_start)))) }}"
                                             class="tgl">
-                                            {{ date('d', strtotime('+' . $i . ' day', strtotime($data->tgl_start))) }}
+                                            {{ date('d/m', strtotime('+' . $i . ' day', strtotime($data->tgl_start))) }}
                                         </a>
                                     @endfor
                                 @endif
