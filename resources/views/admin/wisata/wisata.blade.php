@@ -14,6 +14,18 @@
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="row">
+                                @if (auth()->user()->level == 1)
+                                <div class="form-group col-12">
+                                    <label for="">Pusat</label>
+                                    <select name="pusat_id" id="pusat_id" class="form-control" required>
+                                        <option value="">--Pusat--</option>
+                                        @foreach($pusat as $p)
+                                            <option value="{{ $p->id }}">{{ $p->kd_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-danger pusat_id"></small>
+                                </div>
+                                @endif
                                 <div class="form-group col-md-6">
                                     <label for="nama_desa">Nama Desa</label>
                                     <input type="text" name="nama_desa" class="form-control" id="nama_desa"

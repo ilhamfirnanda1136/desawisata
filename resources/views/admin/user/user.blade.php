@@ -62,6 +62,7 @@
               <input type="email" name="email" id="email" class="form-control"/>
               <div class="email"></div>
             </div>
+            @if (auth()->user()->level == 1)
             <div class="col-12 form-group">
               <label>Pusat</label>
               <select name="pusat_id" id="pusat_id" class="form-control" class="forn-control">
@@ -72,6 +73,7 @@
               </select>
               <div class="pusat_id"></div>
             </div>
+            @endif
             <div class="col-12 form-group">
               <label>Level</label>
               <select name="level" id="level" class="form-control" class="forn-control">

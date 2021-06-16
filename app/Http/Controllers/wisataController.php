@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\{wisata, User, provinsi, kota, kecamatan};
+use App\Models\{wisata, User, provinsi, kota, kecamatan, Pusat};
 
 use DB, Auth, DataTables, Validator;
 
@@ -13,21 +13,27 @@ class wisataController extends Controller
     public function index()
     {
         $provinsi = provinsi::orderBy('nama_provinsi')->get();
-        return view('admin.wisata.wisata', compact('provinsi'));
+        $pusat = Pusat::all();
+        return view('admin.wisata.wisata', compact('provinsi', 'pusat'));
     }
 
     public function wisataAll()
     {
         return response()->json(
-            wisata::where('pusat_id', Auth::user()->pusat_id)->get()
+            auth()->user()->level == 1
+                ? wisata::all()
+                : wisata::where('pusat_id', auth()->user()->pusat_id)->get()
         );
     }
 
     public function tableWisata()
     {
-        $model = wisata::query()
-            ->where('pusat_id', Auth::user()->pusat_id)
-            ->orderBy('nama_desa');
+        $model =
+            auth()->user()->level == 1
+                ? wisata::query()->orderBy('nama_desa')
+                : wisata::query()
+                    ->where('pusat_id', Auth::user()->pusat_id)
+                    ->orderBy('nama_desa');
         return DataTables::of($model)
             ->addColumn('action', function ($model) {
                 return view('admin.wisata.action', [
@@ -87,6 +93,7 @@ class wisataController extends Controller
 
     public function simpanWisata(Request $request)
     {
+        // return response($request->all());
         $validator = $this->validator($request->all());
         if ($validator->fails()) {
             return response()->json([
@@ -94,9 +101,13 @@ class wisataController extends Controller
                 'message' => 'mohon masukkan data dengan benar',
             ]);
         }
+        $pusatId =
+            auth()->user()->level == 1
+                ? $request->pusat_id
+                : auth()->user()->pusat_id;
         wisata::updateOrCreate(
             ['id' => $request->id],
-            array_merge($request->all(), ['pusat_id' => Auth::user()->pusat_id])
+            array_merge($request->all(), ['pusat_id' => $pusatId])
         );
         $message =
             $request->id == ''

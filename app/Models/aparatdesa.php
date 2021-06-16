@@ -15,8 +15,10 @@ class aparatdesa extends Model
         'nama',
         'jenis_kelamin',
         'alamat',
+        'email',
+        'notelp',
         'foto',
-        'user_id'
+        'user_id',
     ];
 
     public function wisata()

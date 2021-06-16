@@ -27,24 +27,39 @@ class homeController extends Controller
                 array_push($pendamping, $u->id);
             }
         }
+
+        if (auth()->user()->level == 1) {
+            $countUser = User::count();
+            $countWisata = wisata::count();
+            $countProject = Project::count();
+            $countAparat = aparatdesa::count();
+        } else {
+            $countUser = User::where(
+                'pusat_id',
+                auth()->user()->pusat_id
+            )->count();
+            $countWisata = wisata::where(
+                'pusat_id',
+                auth()->user()->pusat_id
+            )->count();
+            $countProject = Project::where(
+                'user_id',
+                auth()->user()->id
+            )->count();
+            $countAparat = aparatdesa::where(
+                'pusat_id',
+                auth()->user()->pusat_id
+            )->count();
+        }
         $data = [
             'pendamping' => pendamping::whereIn(
                 'user_id',
                 $pendamping
             )->count(),
-            'desa_wisata' => wisata::where(
-                'pusat_id',
-                auth()->user()->pusat_id
-            )->count(),
-            'users' => User::where(
-                'pusat_id',
-                auth()->user()->pusat_id
-            )->count(),
-            'project' => Project::where('user_id', auth()->user()->id)->count(),
-            'aparat_desa' => aparatdesa::where(
-                'pusat_id',
-                auth()->user()->pusat_id
-            )->count(),
+            'desa_wisata' => $countWisata,
+            'users' => $countUser,
+            'project' => $countProject,
+            'aparat_desa' => $countAparat,
         ];
         return view('home', $data);
     }

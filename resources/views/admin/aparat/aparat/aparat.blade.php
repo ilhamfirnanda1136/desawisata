@@ -34,7 +34,7 @@
 
 {{-- modal --}}
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modal-title">Tambah Aparat Desa</h5>
@@ -51,12 +51,12 @@
               <input type="file" name="foto" id="foto" class="form-control"/>
               <div class="foto"></div>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-sm-12 col-md-6 form-group">
               <label>Nama</label>
               <input type="text" name="nama" id="nama" class="form-control"/>
               <div class="nama"></div>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-sm-12 col-md-6 form-group">
               <label>Jenis Kelamin</label>
               <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" class="forn-control">
                 <option value="" selected disabled>-Pilih-</option>
@@ -65,7 +65,17 @@
               </select>
               <div class="jenis_kelamin"></div>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-sm-12 col-md-6 form-group">
+              <label>Email</label>
+              <input type="text" name="email" id="email" class="form-control"/>
+              <div class="email"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group">
+              <label>No Telepon</label>
+              <input type="text" name="notelp" id="notelp" class="form-control"/>
+              <div class="notelp"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group">
               <label>Jenis Proyek</label>
               <select name="masteraparat_id" id="masteraparat_id" class="form-control select2">
                 <option value="" selected disabled>-Pilih-</option>
@@ -75,7 +85,7 @@
               </select>
               <div class="type_project_id"></div>
             </div>
-            <div class="col-12 form-group">
+            <div class="col-sm-12 col-md-6 form-group">
               <label>Wisata</label>
               <select name="wisata_id" id="wisata_id" class="form-control">
                   <option value="">-Pilih-</option>

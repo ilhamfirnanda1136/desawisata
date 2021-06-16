@@ -73,6 +73,10 @@ class UserController extends Controller
             ]);
         }
         $body = $request->all();
+        $body['pusat_id'] =
+            auth()->user()->level == 1
+                ? $request->pusat_id
+                : auth()->user()->pusat_id;
         $body['password'] = Hash::make($request->password);
         User::updateOrCreate(['id' => $request->id], $body);
         $message = !empty($request->id) ? 'diubah' : 'ditambahkan';
