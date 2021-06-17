@@ -85,7 +85,19 @@
               </select>
               <div class="type_project_id"></div>
             </div>
+            @if (auth()->user()->level == 1)
             <div class="col-sm-12 col-md-6 form-group">
+              <label>Pusat</label>
+              <select name="pusat_id" id="pusat_id" class="form-control">
+                  <option value="">-Pilih-</option>
+                  @foreach ($pusat as $item)
+                    <option value="{{ $item->id }}">{{ $item->kd_name }}</option>
+                  @endforeach
+              </select>
+              <div class="pusat_id"></div>
+            </div>
+            @endif
+            <div class="col-12 form-group">
               <label>Wisata</label>
               <select name="wisata_id" id="wisata_id" class="form-control">
                   <option value="">-Pilih-</option>

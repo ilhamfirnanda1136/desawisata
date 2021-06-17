@@ -15,6 +15,20 @@ async function initMap() {
         },
         map: map,
       })
+      const infoWindow = new google.maps.InfoWindow({
+        content: `
+          <p>
+            <i class="fa fa-home"></i>
+            <b>Desa : ${item.nama_desa.toUpperCase()}</b>
+          <p>
+            <i class="fa fa-home"></i>
+            <b>Alamat : ${item.alamat}</b>
+          </p>
+        `,
+      })
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker)
+      })
     })
   } catch (error) {
     console.error(error)

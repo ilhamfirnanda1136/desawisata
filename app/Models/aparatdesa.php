@@ -18,7 +18,7 @@ class aparatdesa extends Model
         'email',
         'notelp',
         'foto',
-        'user_id',
+        'pusat_id',
     ];
 
     public function wisata()

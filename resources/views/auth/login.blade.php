@@ -22,37 +22,37 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <a href=""><img src="{{asset('images/guest.png')}}" width="70"> <br><b>KAWAL DEWI</b></a>
-  </div>
-  @if(Session::has('successMSG'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Berhasil &nbsp</strong>{{session('successMSG')}}.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-
-  @if(Session::has('error'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error &nbsp</strong>{{session('error')}}.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @error('username')
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error &nbsp</strong>{{ $message }}.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-   @enderror
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+      <div class="login-logo">
+        <a href=""><img src="{{asset('images/logo-dewi.png')}}" width="200"></a>
+      </div>
+      @if(Session::has('successMSG'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Berhasil &nbsp</strong>{{session('successMSG')}}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
+    
+      @if(Session::has('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error &nbsp</strong>{{session('error')}}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
+      @error('username')
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error &nbsp</strong>{{ $message }}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       @enderror
       <p class="login-box-msg">KAWAL DEWI (KAWAL DESA WISATA) <br>  </p>
 
       <form action="{{ route('login') }}" method="post">
