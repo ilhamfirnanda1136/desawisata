@@ -76,7 +76,7 @@
               <div class="notelp"></div>
             </div>
             <div class="col-sm-12 col-md-6 form-group">
-              <label>Jenis Proyek</label>
+              <label>Jabatan</label>
               <select name="masteraparat_id" id="masteraparat_id" class="form-control select2">
                 <option value="" selected disabled>-Pilih-</option>
                 @foreach ($jabatan as $item)
@@ -98,7 +98,7 @@
             </div>
             @endif
             <div class="col-12 form-group">
-              <label>Wisata</label>
+              <label>Desa Wisata</label>
               <select name="wisata_id" id="wisata_id" class="form-control">
                   <option value="">-Pilih-</option>
                   @foreach ($desa as $item)

@@ -30,7 +30,7 @@
           <div class="small-box" style="background-color: #6610f2">
             <div class="inner">
               <h3 class="text-white">{{ $desa_wisata }}</h3>
-              <p class="text-white">Peta Desa Wisata</p>
+              <p class="text-white">Peta Sebarang Pendampingan</p>
             </div>
             <div class="icon">
               <i class="fa fa-map"></i>

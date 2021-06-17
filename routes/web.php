@@ -8,7 +8,9 @@ use App\Http\Controllers\{
     pendampingController,
     wisataController,
     aparatDesaController,
+    DocumentActivityController,
     KegiatanController,
+    LaporanKeuanganController,
     MapController,
     ProjectController,
     ProjectTypeController,
@@ -147,6 +149,36 @@ Route::group(['middleware' => ['auth']], function () {
             'destroy',
         ]);
         Route::post('/save', [KegiatanController::class, 'store']);
+        Route::prefix('dokumen-kegiatan')->group(function () {
+            Route::get('/{kegiatanId}', [
+                DocumentActivityController::class,
+                'index',
+            ])->name('dokumen.index');
+            Route::get('/show/{id}', [
+                DocumentActivityController::class,
+                'show',
+            ]);
+            Route::post('/save', [DocumentActivityController::class, 'store']);
+            Route::delete('/delete/{documentActivity}', [
+                DocumentActivityController::class,
+                'destroy',
+            ]);
+        });
+        Route::prefix('laporan-keuangan')->group(function () {
+            Route::get('/{kegiatanId}', [
+                LaporanKeuanganController::class,
+                'index',
+            ])->name('laporan-keuangan.index');
+            Route::get('/show/{id}', [
+                LaporanKeuanganController::class,
+                'show',
+            ]);
+            Route::post('/save', [LaporanKeuanganController::class, 'store']);
+            Route::delete('/{laporanKeuangan}', [
+                LaporanKeuanganController::class,
+                'destroy',
+            ]);
+        });
     });
     Route::prefix('peta')->group(function () {
         Route::get('/', [MapController::class, 'index'])->name('map.index');

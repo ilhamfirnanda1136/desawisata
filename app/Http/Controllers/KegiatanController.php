@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class KegiatanController extends Controller
@@ -56,8 +55,6 @@ class KegiatanController extends Controller
             'nama_kegiatan' => 'required',
             'keterangan' => 'required',
             'nama_dokumen' => 'required',
-            'filename' => 'required',
-            'filename.*' => 'mimes:jpg,png,jpeg,pdf',
             'prosentase_capaian' => 'required',
             'tgl' => 'required',
             'pengeluaran' => 'required',
@@ -70,37 +67,8 @@ class KegiatanController extends Controller
             ]);
         }
         $body = $request->all();
-        $body['doc'] = [];
-        /* return response()->json($body); */
-        foreach ($request->file('filename') as $file) {
-            if ($file->getClientOriginalExtension() === 'pdf') {
-                $doc = $file->storeAs(
-                    'dokumen/pdf',
-                    $file->getClientOriginalName()
-                );
-            } else {
-                $img = Image::make($file->getRealPath());
-                if ($img->width() > 500) {
-                    $path =
-                        storage_path() .
-                        '/app/public/image/dokumen_img/' .
-                        $file->getClientOriginalName();
-                    $img
-                        ->resize(500, $img->height(), function ($const) {
-                            $const->aspectRatio();
-                        })
-                        ->save($path);
-                    $doc = 'image/dokumen_img/'.$file->getClientOriginalName();
-                } else {
-                    $doc = $file->store('image/dokumen_img');
-                }
-                // return response()->json(Image::make($file)->width());
-            }
-            array_push($body['doc'], $doc);
-        }
-        DB::beginTransaction();
         try {
-            $saveKegiatan = Kegiatan::updateOrCreate(
+            Kegiatan::updateOrCreate(
                 ['id' => $body['id']],
                 [
                     'project_id' => $body['project_id'],
@@ -110,76 +78,14 @@ class KegiatanController extends Controller
                     'prosentase_capaian' => $body['prosentase_capaian'],
                 ]
             );
-            $saveDoc = DokumenKegiatan::create([
-                'kegiatan_id' => $saveKegiatan->id,
-                'nama_dokumen' => $body['nama_dokumen'],
-            ]);
-            foreach ($body['doc'] as $file) {
-                FileDokumenKegiatan::create([
-                    'dokumen_kegiatan_id' => $saveDoc->id,
-                    'filename' => $file,
-                ]);
-            }
-            LaporanKeuangan::create([
-                'kegiatan_id' => $saveKegiatan->id,
-                'tgl' => $body['tgl'],
-                'pengeluaran' => $body['pengeluaran'],
-                'bukti_pengeluaran' => $request->file('bukti_pengeluaran')->store('image/pengeluaran')
-            ]);
-            DB::commit();
             $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
             return response()->json([
                 'success' => $request->all(),
                 'message' => 'Data kegiatan berhasil ' . $message,
             ]);
         } catch (Exception $e) {
-            DB::rollBack();
             return response()->json($e->getMessage());
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $data = DokumenKegiatan::with(['fileDokumenKegiatans'])
-            ->where('kegiatan_id', $id)
-            ->first();
-        // dd($data);
-        // return response()->json($data);
-        return view('admin.kegiatan.dokumen', [
-            'data' => $data,
-            'files' => $data->fileDokumenKegiatans,
-        ]);
-    }
-
-    /**
-     * Show detail financial statement.
-     *
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function showFinancialStatement($project_id)
-    {
-        return view('admin.kegiatan.laporan_keuangan',[
-            'data' => LaporanKeuangan::with('kegiatan')->where('kegiatan_id',$project_id)->first()
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Kegiatan $kegiatan)
-    {
-        //
     }
 
     /**
@@ -199,5 +105,70 @@ class KegiatanController extends Controller
         $kegiatan->delete();
 
         return response()->json(['messge' => 'Data kegiatan berhasil dihapus']);
+    }
+
+    public function indexDocumentActivity()
+    {
+        return view('admin.dokumen_kegiatan.dokumen');
+    }
+
+    public function jsonDocumentActivity()
+    {
+        $query = DokumenKegiatan::latest('id');
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn(
+                'action',
+                fn($row) => view('admin.dokumen_kegiatan.action', [
+                    'model' => $row,
+                ])
+            )
+            ->make(true);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $data = DokumenKegiatan::with(['fileDokumenKegiatans'])
+            ->where('kegiatan_id', $id)
+            ->first();
+        // dd($data);
+        // return response()->json($data);
+        return view('admin.dokumen_kegiatan.detail', [
+            'data' => $data,
+            'files' => $data->fileDokumenKegiatans,
+        ]);
+    }
+
+    /**
+     * Show detail financial statement.
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function showFinancialStatement($project_id)
+    {
+        return view('admin.laporan_keuangan.laporan_keuangan', [
+            'data' => LaporanKeuangan::with('kegiatan')
+                ->where('kegiatan_id', $project_id)
+                ->first(),
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Kegiatan $kegiatan)
+    {
+        //
     }
 }
