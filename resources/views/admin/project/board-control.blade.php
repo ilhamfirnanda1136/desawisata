@@ -9,10 +9,8 @@
 
         .tgl {
             padding: 1rem;
-            background-color: #007BFF;
             margin: 10px 3px 3px 5px;
             box-shadow: 2px 2px black;
-            border: 1px solid #007BFF;
             border-radius: 10px;
             color: white;
             font-weight: bold;
@@ -50,8 +48,28 @@
                                 @endphp
                                 @if ($start <= $finish)
                                     @for ($i = 0; $i < $dayBetween; $i++)
+                                    @php
+                                        $dataKegiatan = $kegiatan->with('dokumenKegiatans', 'laporanKeuangans')->where('project_id',$data->id)->where('tanggal',date('d-m-Y', strtotime('+' . $i . ' day', strtotime($data->tgl_start))))->get();
+                                        // var_dump($dataKegiatan->dokumenKegiatans);
+                                        $color = '#007BFF';
+                                    @endphp
+                                    @foreach ($dataKegiatan as $item)
+                                        @if (!$dataKegiatan->isEmpty() && $item->dokumenKegiatans->isEmpty())
+                                            @php
+                                                $color = 'yellow';
+                                            @endphp
+                                        @elseif (!$item->dokumenKegiatans->isEmpty() && $item->laporanKeuangans->isEmpty())
+                                            @php
+                                                $color = 'orange';
+                                            @endphp
+                                        @elseif (!$item->laporanKeuangans->isEmpty() && !$item->dokumenKegiatans->isEmpty())
+                                            @php
+                                                $color = 'green';
+                                            @endphp
+                                        @endif
+                                    @endforeach
                                         <a href="{{ url('/kegiatan/' . $data->id . '/' . date('d-m-Y', strtotime('+' . $i . ' day', strtotime($data->tgl_start)))) }}"
-                                            class="tgl">
+                                            class="tgl" style="background-color: {{ $color }}; border:1px solid {{ $color }};">
                                             {{ date('d/m', strtotime('+' . $i . ' day', strtotime($data->tgl_start))) }}
                                         </a>
                                     @endfor

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kegiatan;
 use App\Models\Project;
 use App\Models\ProjectType;
-use DateInterval;
-use DatePeriod;
-use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,8 +22,10 @@ class ProjectController extends Controller
     public function viewBoardControl(Project $project)
     {
         // return response()->json($project);
+        // dd(Kegiatan::with('dokumenKegiatans')->first()->dokumenKegiatans);
         return view('admin.project.board-control', [
             'data' => $project,
+            'kegiatan' => new Kegiatan(),
         ]);
     }
 

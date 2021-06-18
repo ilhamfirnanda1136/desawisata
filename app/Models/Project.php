@@ -15,11 +15,16 @@ class Project extends Model
         'tahun_project',
         'nilai_pagu_project',
         'tgl_start',
-        'tgl_finish'
+        'tgl_finish',
     ];
 
     public function projectType()
     {
-        return $this->belongsTo(ProjectType::class,'type_project_id');
+        return $this->belongsTo(ProjectType::class, 'type_project_id');
+    }
+
+    public function kegiatans()
+    {
+        return $this->hasMany(Kegiatan::class);
     }
 }

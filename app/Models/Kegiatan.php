@@ -27,4 +27,9 @@ class Kegiatan extends Model
     {
         return $this->hasMany(DokumenKegiatan::class);
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
 }

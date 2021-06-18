@@ -21,9 +21,24 @@ class KegiatanController extends Controller
      */
     public function index($id, $date)
     {
+        $data = Kegiatan::with(['dokumenKegiatans', 'laporanKeuangans'])
+            ->where('project_id', $id)
+            ->where('tanggal', $date)
+            ->get();
+        if (!empty($data)) {
+            $color = 'yellow';
+        } elseif (!empty($data->dokumenKegiatans)) {
+            $color = 'orange';
+        } elseif (
+            !empty($data->dokumenKegiatans) &&
+            !empty($data->laporanKeuangans)
+        ) {
+            $color = 'green';
+        }
         return view('admin.kegiatan.kegiatan', [
             'project_id' => $id,
             'tgl_project' => $date,
+            'color' => $color,
         ]);
     }
 
