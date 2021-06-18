@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td>{{ pathinfo($file->filename)['basename'] }}</td>
                                                 <td>
-                                                    <a href="{{ asset('public/storage/'.$file->filename) }}" target="_blank" class="btn btn-info">
+                                                    <a href="{{ route('dokumen.prefiew',$file->id)}}" target="_blank" class="btn btn-info">
                                                         <i class="fa fa-eye"></i>
                                                         Preview
                                                     </a>

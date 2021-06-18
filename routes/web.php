@@ -143,6 +143,10 @@ Route::group(['middleware' => ['auth']], function () {
                 DocumentActivityController::class,
                 'jsonDT',
             ]);
+            Route::get('/preview-pdf/{id}', [
+                DocumentActivityController::class,
+                'previewPDF',
+            ])->name('dokumen.prefiew');
             Route::post('/save', [DocumentActivityController::class, 'store']);
             Route::delete('/delete/{id}', [
                 DocumentActivityController::class,

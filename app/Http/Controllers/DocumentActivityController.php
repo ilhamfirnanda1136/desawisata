@@ -71,7 +71,7 @@ class DocumentActivityController extends Controller
             if ($file->getClientOriginalExtension() === 'pdf') {
                 $doc = $file->storeAs(
                     'dokumen/pdf',
-                    $file->getClientOriginalName()
+                    str_replace(' ', '-', $file->getClientOriginalName())
                 );
             } else {
                 $img = Image::make($file->getRealPath());
@@ -79,14 +79,15 @@ class DocumentActivityController extends Controller
                     $path =
                         storage_path() .
                         '/app/public/image/dokumen_img/' .
-                        $file->getClientOriginalName();
+                        str_replace(' ', '-', $file->getClientOriginalName());
                     $img
                         ->resize(500, $img->height(), function ($const) {
                             $const->aspectRatio();
                         })
                         ->save($path);
                     $doc =
-                        'image/dokumen_img/' . $file->getClientOriginalName();
+                        'image/dokumen_img/' .
+                        str_replace(' ', '-', $file->getClientOriginalName());
                 } else {
                     $doc = $file->store('image/dokumen_img');
                 }
@@ -150,5 +151,11 @@ class DocumentActivityController extends Controller
         return response()->json([
             'message' => 'Data dokumen kegiatan berhasil dihapus',
         ]);
+    }
+
+    public function previewPDF($id)
+    {
+        $data = FileDokumenKegiatan::find($id);
+        return response()->file(public_path('/storage/' . $data->filename));
     }
 }
