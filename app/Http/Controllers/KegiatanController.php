@@ -53,11 +53,7 @@ class KegiatanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_kegiatan' => 'required',
             'keterangan' => 'required',
-            'nama_dokumen' => 'required',
             'prosentase_capaian' => 'required',
-            'tgl' => 'required',
-            'pengeluaran' => 'required',
-            'bukti_pengeluaran' => 'required|mimes:jpg,png,jpeg',
         ]);
         if ($validator->fails()) {
             return response()->json([

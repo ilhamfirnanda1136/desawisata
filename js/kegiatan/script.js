@@ -34,6 +34,7 @@ async function handleSubmit(e) {
       url: `${urlPage}/save`,
       data: formData,
     })
+    console.log(store.data)
     matikanLoading()
     if (store.data.errors === undefined) {
       for (const key in store.data.success) {
