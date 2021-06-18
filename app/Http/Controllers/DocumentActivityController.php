@@ -145,7 +145,7 @@ class DocumentActivityController extends Controller
             $id
         );
         foreach ($rowDocActivity->fileDokumenKegiatans as $file) {
-            Storage::delete($file->filename);
+            unlink(storage_path('app/public/' . $file->filename));
         }
         $rowDocActivity->delete();
         return response()->json([

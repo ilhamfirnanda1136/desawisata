@@ -13,12 +13,12 @@ class LaporanKeuangan extends Model
         'kegiatan_id',
         'tgl',
         'pengeluaran',
-        'bukti_pengeluaran'
+        'keterangan_pembayaran',
+        'bukti_pengeluaran',
     ];
 
     public function kegiatan()
     {
-        return $this->belongsTo(Kegiatan::class,'kegiatan_id');
+        return $this->belongsTo(Kegiatan::class, 'kegiatan_id');
     }
-    
 }

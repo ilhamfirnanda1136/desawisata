@@ -65,6 +65,7 @@ class LaporanKeuanganController extends Controller
         LaporanKeuangan::create([
             'kegiatan_id' => $request->kegiatan_id,
             'tgl' => $request->tgl,
+            'keterangan_pembayaran' => $request->keterangan_pembayaran,
             'pengeluaran' => $request->pengeluaran,
             'bukti_pengeluaran' => $request
                 ->file('bukti_pengeluaran')
@@ -97,7 +98,9 @@ class LaporanKeuanganController extends Controller
      */
     public function destroy(LaporanKeuangan $laporanKeuangan)
     {
-        Storage::delete($laporanKeuangan->bukti_pengeluaran);
+        unlink(
+            storage_path('app/public/' . $laporanKeuangan->bukti_pengeluaran)
+        );
         $laporanKeuangan->delete();
         return response()->json([
             'message' => 'Data laporan keuangan berhasil dihapus',

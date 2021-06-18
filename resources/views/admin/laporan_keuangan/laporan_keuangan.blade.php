@@ -24,11 +24,16 @@
                                 <div class="tgl"></div>
                             </div>
                             <div class="col-sm-12 col-md-6 form-group">
-                                <label class="pengeluaran"> Pengeluaran</label>
+                                <label class="keterangan_pembayaran">Keterang Pembayaran</label>
+                                <input type="text" name="keterangan_pembayaran" id="keterangan_pembayaran" class="form-control"/>
+                                <div class="pengeluaran"></div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 form-group">
+                                <label class="pengeluaran">Pengeluaran</label>
                                 <input type="text" name="pengeluaran" id="pengeluaran" class="form-control" placeholder="Rp."/>
                                 <div class="pengeluaran"></div>
                             </div>
-                            <div class="col-12 form-group">
+                            <div class="col-md-6 col-sm-12 form-group">
                                 <label class="bukti_pengeluaran">Upload Bukti Pengeluaran</label>
                                 <input type="file" name="bukti_pengeluaran" id="bukti_pengeluaran" class="form-control"/>
                                 <div class="bukti_pengeluaran"></div>
