@@ -91,11 +91,20 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
-        $rowDocActivity = DokumenKegiatan::with('fileDokumenKegiatans')
-            ->where('kegiatan_id', $kegiatan->id)
-            ->first();
-        foreach ($rowDocActivity->fileDokumenKegiatans as $file) {
-            Storage::delete($file->filename);
+        $row = $kegiatan
+            ->with([
+                'dokumenKegiatans.fileDokumenKegiatans',
+                'laporanKeuangans',
+            ])
+            ->find($kegiatan->id);
+        // return response($row);
+        foreach ($row->dokumenKegiatans as $doc) {
+            foreach ($doc->fileDokumenKegiatans as $file) {
+                unlink(storage_path('app/public/' . $file->filename));
+            }
+        }
+        foreach ($row->laporanKeuangans as $lk) {
+            unlink(storage_path('app/public/' . $lk->bukti_pengeluaran));
         }
         $kegiatan->delete();
 

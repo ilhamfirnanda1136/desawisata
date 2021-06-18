@@ -46,7 +46,7 @@
                                 @php
                                     $start = new DateTime($data->tgl_start);
                                     $finish = new DateTime($data->tgl_finish);
-                                    $dayBetween = $start->diff($finish)->days;
+                                    $dayBetween = $start->diff($finish)->days + 1;
                                 @endphp
                                 @if ($start <= $finish)
                                     @for ($i = 0; $i < $dayBetween; $i++)

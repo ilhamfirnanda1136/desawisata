@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="prosentase_capaian">Prosantase Capaian</label>
-                                    <textarea name="prosentase_capaian" id="prosentase_capaian" cols="5" rows="3"
+                                    <textarea name="prosentase_capaian" id="prosentase_capaian" cols="1" rows="1"
                                         class="form-control"></textarea>
                                     <div class="prosentase_capaian"></div>
                                 </div>

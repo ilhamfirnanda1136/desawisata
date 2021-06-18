@@ -1,5 +1,5 @@
 <a href="{{ route('laporan-keuangan.index', $model->id) }}" data-toggle="tooltip" data-placement="top" title="Laporan Keuangan" class="btn btn-info">
-    <i class="fa fa-file-text-o"></i>
+    <i class="fa fa-usd"></i>
 </a>
 <a href="{{ route('dokumen.index', $model->id) }}" data-toggle="tooltip" data-placement="top" title="Dokumen Kegiatan" class="btn btn-success">
     <i class="fa fa-file"></i>
