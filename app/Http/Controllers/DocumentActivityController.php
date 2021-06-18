@@ -6,6 +6,7 @@ use App\Models\DokumenKegiatan;
 use App\Models\FileDokumenKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Image;
@@ -48,6 +49,7 @@ class DocumentActivityController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request->all());
         $validator = Validator::make($request->all(), [
             'nama_dokumen' => 'required',
             'filename' => 'required',
@@ -104,7 +106,13 @@ class DocumentActivityController extends Controller
                     'filename' => $file,
                 ]);
             }
+            DB::commit();
+            return response()->json([
+                'success' => $request->all(),
+                'message' => 'Data dokumen kegiatan berhasil disimpan',
+            ]);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(['errors' => $th->getMessage()], 500);
         }
     }
@@ -117,8 +125,10 @@ class DocumentActivityController extends Controller
      */
     public function show($id)
     {
+        $data = DokumenKegiatan::with('fileDokumenKegiatans')->find($id);
         return view('admin.dokumen_kegiatan.detail', [
-            'model' => DokumenKegiatan::with('fileDokumenKegiatans')->find($id),
+            'data' => $data,
+            'files' => $data->fileDokumenKegiatans,
         ]);
     }
 
@@ -128,9 +138,15 @@ class DocumentActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DokumenKegiatan $documentActivity)
+    public function destroy($id)
     {
-        $documentActivity->delete();
+        $rowDocActivity = DokumenKegiatan::with('fileDokumenKegiatans')->find(
+            $id
+        );
+        foreach ($rowDocActivity->fileDokumenKegiatans as $file) {
+            Storage::delete($file->filename);
+        }
+        $rowDocActivity->delete();
         return response()->json([
             'message' => 'Data dokumen kegiatan berhasil dihapus',
         ]);

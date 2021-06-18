@@ -8,7 +8,6 @@ use App\Models\Kegiatan;
 use App\Models\LaporanKeuangan;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -84,7 +83,7 @@ class KegiatanController extends Controller
                 'message' => 'Data kegiatan berhasil ' . $message,
             ]);
         } catch (Exception $e) {
-            return response()->json($e->getMessage());
+            return response()->json($e->getMessage(), 500);
         }
     }
 
@@ -105,70 +104,5 @@ class KegiatanController extends Controller
         $kegiatan->delete();
 
         return response()->json(['messge' => 'Data kegiatan berhasil dihapus']);
-    }
-
-    public function indexDocumentActivity()
-    {
-        return view('admin.dokumen_kegiatan.dokumen');
-    }
-
-    public function jsonDocumentActivity()
-    {
-        $query = DokumenKegiatan::latest('id');
-        return DataTables::of($query)
-            ->addIndexColumn()
-            ->addColumn(
-                'action',
-                fn($row) => view('admin.dokumen_kegiatan.action', [
-                    'model' => $row,
-                ])
-            )
-            ->make(true);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $data = DokumenKegiatan::with(['fileDokumenKegiatans'])
-            ->where('kegiatan_id', $id)
-            ->first();
-        // dd($data);
-        // return response()->json($data);
-        return view('admin.dokumen_kegiatan.detail', [
-            'data' => $data,
-            'files' => $data->fileDokumenKegiatans,
-        ]);
-    }
-
-    /**
-     * Show detail financial statement.
-     *
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function showFinancialStatement($project_id)
-    {
-        return view('admin.laporan_keuangan.laporan_keuangan', [
-            'data' => LaporanKeuangan::with('kegiatan')
-                ->where('kegiatan_id', $project_id)
-                ->first(),
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Kegiatan $kegiatan)
-    {
-        //
     }
 }

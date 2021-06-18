@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LaporanKeuangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -28,9 +29,14 @@ class LaporanKeuanganController extends Controller
         );
         return DataTables::of($query)
             ->addIndexColumn()
+            ->editColumn('tgl', fn($row) => date('d-m-Y', strtotime($row->tgl)))
+            ->editColumn(
+                'pengeluaran',
+                fn($row) => number_format($row->pengeluaran, 0, ' ', '.')
+            )
             ->addColumn(
                 'action',
-                fn($row) => view('admin.dokumen_kegiatan.action', [
+                fn($row) => view('admin.laporan_keuangan.action', [
                     'model' => $row,
                 ])
             )
@@ -79,7 +85,7 @@ class LaporanKeuanganController extends Controller
     public function show($id)
     {
         return view('admin.laporan_keuangan.detail', [
-            'model' => LaporanKeuangan::with('kegiatan')->find($id),
+            'data' => LaporanKeuangan::with('kegiatan')->find($id),
         ]);
     }
 
@@ -91,6 +97,7 @@ class LaporanKeuanganController extends Controller
      */
     public function destroy(LaporanKeuangan $laporanKeuangan)
     {
+        Storage::delete($laporanKeuangan->bukti_pengeluaran);
         $laporanKeuangan->delete();
         return response()->json([
             'message' => 'Data laporan keuangan berhasil dihapus',

@@ -1,7 +1,5 @@
-const urlPage = `${process_env_url}/kegiatan`
-const form = elid('form-kegiatan')
-
-let i = 0
+const urlPage = `${process_env_url}/kegiatan/laporan-keuangan`
+const form = elid('form-laporan-keuangan')
 function loadTable() {
   $('#table').DataTable({
     processing: true,
@@ -10,13 +8,20 @@ function loadTable() {
     lengtChange: true,
     autoWidth: false,
     ajax: {
-      url: `${urlPage}/${projectId}/${dateKegiatan}/json-dt`,
+      url: `${urlPage}/json-dt/${+kegiatanId}`,
     },
     columns: [
       { data: 'DT_RowIndex', name: 'id' },
-      { data: 'nama_kegiatan', name: 'nama_kegiatan' },
-      { data: 'keterangan', name: 'keterangan' },
-      { data: 'prosentase_capaian', name: 'prosentase_capaian' },
+      { data: 'tgl', name: 'tgl' },
+      { data: 'pengeluaran', name: 'pengeluaran' },
+      {
+        data: 'bukti_pengeluaran',
+        render: (row) =>
+          ` <a href="${url}/public/storage/${row}" class="shadow-sm mx-2 p-2" data-toggle="lightbox" data-gallery="gallery">
+          <img src="${url}/public/storage/${row}" class="img-fluid" width="100" height="100" alt="" >
+          </a>`,
+        name: 'bukti_pengeluaran',
+      },
       { data: 'action', name: 'action' },
     ],
     destroy: true,
@@ -26,6 +31,7 @@ function loadTable() {
 async function handleSubmit(e) {
   e.preventDefault()
   const formData = new FormData(form)
+  formData.append('pengeluaran', removePoint(elid('pengeluaran').value))
   let icon = ''
   loading()
   try {
@@ -85,13 +91,17 @@ function handleDelete(e) {
   }
 }
 
-// elid('filename').addEventListener('change',() => {
-//     files.push(e.target.value)
-// })
-
 function init() {
   loadTable()
-  onEvent('click', [handleDelete])
+  elid('pengeluaran').onkeyup = (e) =>
+    (e.target.value = inputIDR(e.target.value))
+  onEvent('click', handleDelete)
   form.addEventListener('submit', handleSubmit)
+  $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+    event.preventDefault()
+    $(this).ekkoLightbox({
+      alwaysShowClose: true,
+    })
+  })
 }
 document.addEventListener('DOMContentLoaded', init)

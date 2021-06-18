@@ -43,50 +43,6 @@
                                         class="form-control"></textarea>
                                     <div class="prosentase_capaian"></div>
                                 </div>
-                                <div class="text-center p-2 col-12 mb-3"
-                                    style="background: grey; font-weight:bold; color:white; border:1px solid grey; border-radius:10px;">
-                                    <i class="fa fa-arrow-down"></i>
-                                    Upload Dokumen Kegiatan
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                                <div class="col-12 form-group">
-                                    <label for="nama_dokumen">Nama Dokumen</label>
-                                    <input type="text" name="nama_dokumen" id="nama_dokumen" class="form-control">
-                                    <div class="nama_dokumen"></div>
-                                </div>
-                                <div class="col-12 form-group">
-                                    <label for="filename">Upload File Dokumen</label>
-                                    <input type="file" name="filename[]" id="filename" class="form-control">
-                                    <div class="filename"></div>
-                                </div>
-                                <div id="add-input-file" class=" col-12"></div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-info" type="button" id="btn-add-inputfile">
-                                        <i class="fa fa-plus"></i>
-                                        Tambah
-                                    </button>
-                                </div>
-                                <div class="text-center p-2 col-12 mb-3 mt-3"
-                                    style="background: grey; font-weight:bold; color:white; border:1px solid grey; border-radius:10px;">
-                                    <i class="fa fa-arrow-down"></i>
-                                    Laporan Keuangan
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                                <div class="col-sm-12 col-md-6 form-group">
-                                    <label class="tgl">Tanggal Pengeluaran</label>
-                                    <input type="date" name="tgl" id="tgl" class="form-control"/>
-                                    <div class="tgl"></div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 form-group">
-                                    <label class="pengeluaran"> Pengeluaran</label>
-                                    <input type="text" name="pengeluaran" id="pengeluaran" class="form-control" placeholder="Rp."/>
-                                    <div class="pengeluaran"></div>
-                                </div>
-                                <div class="col-12 form-group">
-                                    <label class="bukti_pengeluaran">Upload Bukti Pengeluaran</label>
-                                    <input type="file" name="bukti_pengeluaran" id="bukti_pengeluaran" class="form-control"/>
-                                    <div class="bukti_pengeluaran"></div>
-                                </div>
                             </div>
                         </div>
                         <div class="card-footer">

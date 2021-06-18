@@ -40,6 +40,10 @@ class ProjectController extends Controller
                     '/' .
                     date('d-m-Y', strtotime($row->tgl_finish))
             )
+            ->editColumn(
+                'nilai_pagu_project',
+                fn($row) => number_format($row->nilai_pagu_project, 0, ' ', '.')
+            )
             ->addColumn(
                 'action',
                 fn($row) => view('admin.project.action', ['model' => $row])
