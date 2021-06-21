@@ -12,7 +12,7 @@
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fa fa-user"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-right">
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
@@ -23,11 +23,12 @@
                 <p class="text-sm"> {{ Auth::user()->email }}</p>
               </div>
             </div>
+            <div class="dropdown-divider"></div>
             <!-- Message End -->
           </a>
-          <a href="#" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out nav-icon"></i> Ubah Profile</a>
-          <a href="#" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out nav-icon"></i> Ubah Password</a>
-          <a href="{{url('logout')}}" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out nav-icon"></i> Log Out</a>
+          <a href="#" class="dropdown-item dropdown-footer text-left"><i class="fa fa-user nav-icon"  aria-hidden="true"></i> Ubah Profile</a>
+          <a href="#" class="dropdown-item dropdown-footer text-left"><i class="fa fa-lock nav-icon"></i> Ubah Password</a>
+          <a href="{{url('logout')}}" class="dropdown-item dropdown-footer text-left"><i class="fa fa-sign-out nav-icon"></i> Log Out</a>
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
