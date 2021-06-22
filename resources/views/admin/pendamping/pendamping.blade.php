@@ -156,7 +156,7 @@
                             @foreach($member as $m)
                                 <?php
                                     if($m->foto == null) {
-                                        $foto = url('images/noimage.jpg');
+                                        $foto = url('images/person1.png');
                                     } else {
                                         $foto = "https://dpd.asppi.or.id/foto/$m->foto";
                                     }

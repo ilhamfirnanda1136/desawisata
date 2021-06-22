@@ -94,6 +94,7 @@ class aparatDesaController extends Controller
 
     public function store(Request $request)
     {
+        // return response()->json($request->all());
         $validator = Validator::make($request->all(), [
             'wisata_id' => 'required',
             'masteraparat_id' => 'required',
@@ -108,34 +109,29 @@ class aparatDesaController extends Controller
                 'message' => 'Masukkan data dengan benar',
             ]);
         }
-        try {
-            $model = new aparatdesa();
-            $body = $request->all();
-            $body['pusat_id'] =
-                auth()->user()->level == 1
-                    ? $request->pusat_id
-                    : auth()->user()->psuat_id;
-            $find = $model->find($body['id']);
+        $model = new aparatdesa();
+        $body = $request->all();
+        $body['pusat_id'] =
+            auth()->user()->level == 1
+                ? $request->pusat_id
+                : auth()->user()->pusat_id;
+        $find = $model->find($body['id']);
+        if (!empty($body['id'])) {
             if (!is_null($request->file('foto')) && !is_null($find)) {
                 Storage::delete($find->foto);
             }
-            if (!is_null($body['id'])) {
-                $body['foto'] = !empty($request->file('foto'))
-                    ? $request->file('foto')->store('image/foto')
-                    : $find->foto;
-            } else {
-                $body['foto'] = $request->file('foto')->store('image/foto');
-            }
-            $model->updateOrCreate(['id' => $body['id']], $body);
-            $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
-            return response()->json([
-                'success' => $request->all(),
-                'message' => 'Data aparat desa berhasil ' . $message,
-            ]);
-        } catch (\Throwable $th) {
-            return response(['message' => $th->getMessage()], 500);
-            throw new Exception($th->getMessage());
+            $body['foto'] = !empty($request->file('foto'))
+                ? $request->file('foto')->store('image/foto')
+                : $find->foto;
+        } else {
+            $body['foto'] = $request->file('foto')->store('image/foto');
         }
+        $model->updateOrCreate(['id' => $body['id']], $body);
+        $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
+        return response()->json([
+            'success' => $request->all(),
+            'message' => 'Data aparat desa berhasil ' . $message,
+        ]);
     }
 
     public function show($id)
