@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     KegiatanController,
     LaporanKeuanganController,
     MapController,
+    ProfileController,
     ProjectController,
     ProjectTypeController,
     UserController
@@ -187,5 +188,13 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::prefix('peta')->group(function () {
         Route::get('/', [MapController::class, 'index'])->name('map.index');
+    });
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name(
+            'profile.index'
+        );
+        Route::post('/save', [ProfileController::class, 'store'])->name(
+            'profile.store'
+        );
     });
 });
