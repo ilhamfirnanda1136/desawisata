@@ -29,24 +29,15 @@ class ProfileController extends Controller
             ->with('message', 'Profile berhasil diperbarui');
     }
 
-    public function show()
-    {
-        return response()->json(
-            User::with('roles')
-                ->where('id', auth()->user()->id)
-                ->firstOrFail()
-        );
-    }
-
     public function changePassword()
     {
-        return view('modules.auth.change_password');
+        return view('auth.change-password');
     }
 
     public function storeChangePassword(Request $request)
     {
         $userSession = auth()->user();
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'old_password' => [
                 'required',
                 function ($attribute, $value, $fail) use ($userSession) {
@@ -58,20 +49,11 @@ class ProfileController extends Controller
             'new_password' => 'required|same:password_confirmation',
             'password_confirmation' => 'required',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors(),
-                'message' => 'Masukkan Data Dengan Benar',
-            ]);
-        } else {
-            User::where('id', $userSession->id)->update([
-                'password' => Hash::make($request->new_password),
-            ]);
-            return response()->json([
-                'success' => $request->all(),
-                'message' => 'Data berhasil dimasukkan',
-            ]);
-        }
+        User::where('id', $userSession->id)->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+        return redirect()
+            ->route('profile.change-password')
+            ->with('message', 'Password baru anda berhasil disimpan');
     }
 }

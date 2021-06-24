@@ -27,7 +27,7 @@
             <!-- Message End -->
           </a>
           <a href="{{ route('profile.index') }}" class="dropdown-item dropdown-footer text-left"><i class="fa fa-user nav-icon"  aria-hidden="true"></i> Ubah Profile</a>
-          <a href="#" class="dropdown-item dropdown-footer text-left"><i class="fa fa-lock nav-icon"></i> Ubah Password</a>
+          <a href="{{ route('profile.change-password') }}" class="dropdown-item dropdown-footer text-left"><i class="fa fa-lock nav-icon"></i> Ubah Password</a>
           <a href="{{url('logout')}}" class="dropdown-item dropdown-footer text-left"><i class="fa fa-sign-out nav-icon"></i> Log Out</a>
         </div>
       </li>

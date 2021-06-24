@@ -196,5 +196,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/save', [ProfileController::class, 'store'])->name(
             'profile.store'
         );
+        Route::prefix('change-password')->group(function () {
+            Route::get('/', [ProfileController::class, 'changePassword'])->name(
+                'profile.change-password'
+            );
+            Route::post('/save', [
+                ProfileController::class,
+                'storeChangePassword',
+            ])->name('profile.store-password');
+        });
     });
 });
