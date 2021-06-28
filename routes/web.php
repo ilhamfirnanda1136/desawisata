@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('pendamping', [pendampingController::class, 'index'])->name(
         'pendamping.index'
     );
+    Route::get('pendamping/json-member', [
+        pendampingController::class,
+        'jsonMember',
+    ])->name('pendamping.json-member');
     Route::get('pendamping/table', [
         pendampingController::class,
         'tablePendamping',

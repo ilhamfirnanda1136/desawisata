@@ -2,6 +2,11 @@
 @section('header')
 @stop
     @section('content')
+    <style>
+        .modal-lg{
+            width: 80%;
+        }
+    </style>
     <div class="container-fluid" style="margin-top: -10px;">
         <div class="row">
             <div class="col-md-12">
@@ -142,7 +147,7 @@
                 </div>
                 <div class="modal-body table-responsive">
                     <input type="hidden" id="pilihKondisi"  />
-                    <table class="table-bordered table table-hover" id="table-anggota-pilih">
+                    <table class="table-bordered table table-hover responsive" id="table-anggota-pilih" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>No Anggota</th>
@@ -153,22 +158,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($member as $m)
+                            {{-- @foreach($member as $m)
                                 <?php
-                                    if($m->foto == null) {
-                                        $foto = url('images/person1.png');
-                                    } else {
-                                        $foto = "https://dpd.asppi.or.id/foto/$m->foto";
-                                    }
+                                    // if($m->foto == null) {
+                                    //     $foto = url('images/person1.png');
+                                    // } else {
+                                    //     $foto = "https://dpd.asppi.or.id/foto/$m->foto";
+                                    // }
                                 ?>
                                 <tr>
-                                    <td> <?php echo $m->kd_pst.".".$m->kd_daerah.".".$m->no_urut ;?></td>
+                                    <td> <?php // echo $m->kd_pst.".".$m->kd_daerah.".".$m->no_urut ;?></td>
                                     <td>{{ $m->nama }}</td>
                                     <td><img src="{{ $foto }}" alt="{{ $m->nama }}" width="50" /></td>
                                     <td>{{ $m->email }}</td>
                                     <td><button class="btn btn-success btn-md btn-pilih" data-id="{{ $m->id }}"data-nama="{{ $m->nama }}">Pilih</button></td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -182,5 +187,9 @@
     
     @stop
     @section('footer')
+    <script>
+        const urlMember = "{{ route('pendamping.json-member') }}"
+        const url = "{{ url('') }}"
+    </script>
     <script src="{{ asset('js/pendamping/script.js') }}"></script>
     @endsection

@@ -23,8 +23,49 @@ class pendamping {
     btnDelete: '.btn-delete',
   }
 
-  static loadAnggota = () => {
-    $(this.DOMStrings.tableAnggota).DataTable()
+  dataMember() {
+    const members = []
+    return new Promise((resolve, reject) => {
+      axios
+        .get(urlMember)
+        .then((res) => {
+          res.data.forEach((item) =>
+            members.push({
+              foto:
+                item.foto !== null
+                  ? `<img src="https://dpd.asppi.or.id/foto/${item.foto}" alt="${item.nama}" width="50"/>`
+                  : `<img src="${url}/images/person1.png" alt="${item.nama}" width="50"/>`,
+              no_anggota: `${item.kd_pst}.${item.kd_daerah}.${item.no_urut}`,
+              nama: item.nama,
+              email: item.email,
+              action: `<button class="btn btn-success btn-md btn-pilih" data-id="${item.id}" data-nama="${item.nama}">Pilih</button>
+        `,
+            }),
+          )
+          resolve(members)
+        })
+        .catch((err) => reject(err))
+    })
+  }
+
+  static async loadAnggota() {
+    // console.log(urlMember)
+    const data = await pendamping.prototype.dataMember()
+    $(this.DOMStrings.tableAnggota).DataTable({
+      responsive: true,
+      lengtChange: true,
+      autoWidth: false,
+      info: false,
+      data: data,
+      columns: [
+        { data: 'no_anggota' },
+        { data: 'nama' },
+        { data: 'foto' },
+        { data: 'email' },
+        { data: 'action', render: (data) => data },
+      ],
+      destory: true,
+    })
   }
 
   static openAnggota = (edit = 'tambah') => {

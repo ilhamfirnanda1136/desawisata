@@ -9,7 +9,7 @@
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <a class="nav-link" data-toggle="dropdown" href="#" style="color: slategray !important;">
           <i class="fa fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right">

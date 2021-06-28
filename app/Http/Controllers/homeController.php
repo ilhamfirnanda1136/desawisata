@@ -33,6 +33,7 @@ class homeController extends Controller
             $countWisata = wisata::count();
             $countProject = Project::count();
             $countAparat = aparatdesa::count();
+            $pendamping = pendamping::count();
         } else {
             $countUser = User::where(
                 'pusat_id',
@@ -50,12 +51,10 @@ class homeController extends Controller
                 'pusat_id',
                 auth()->user()->pusat_id
             )->count();
+            $pendamping = pendamping::whereIn('user_id', $pendamping)->count();
         }
         $data = [
-            'pendamping' => pendamping::whereIn(
-                'user_id',
-                $pendamping
-            )->count(),
+            'pendamping' => $pendamping,
             'desa_wisata' => $countWisata,
             'users' => $countUser,
             'project' => $countProject,

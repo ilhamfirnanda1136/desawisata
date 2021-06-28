@@ -21,6 +21,13 @@ class pendampingController extends Controller
         ]);
     }
 
+    public function jsonMember()
+    {
+        $auth = Auth::user()->pusat_id;
+        $response = Http::get('https://siska.asppi.or.id/api/member/' . $auth);
+        return response()->json(json_decode($response));
+    }
+
     public function tablePendamping()
     {
         $userArray = [];

@@ -1,13 +1,25 @@
+<style>
+  aside{
+    background-color: #082e69;
+  }
+  .nav-link{
+    color: white !important;
+  }
+  .user-panel{
+    border-bottom: 1px solid white;
+  }
+</style>
+
 <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar elevation-4">
     <!-- Brand Logo -->
-    <div class="logo-dewi p-3 mx-2"  style="border-bottom: 1px solid #4F5962">
+    <div class="logo-dewi p-3 mx-2"  style="border-bottom: 1px solid white">
       <div class="d-flex justify-content-center">
         <a href="{{url('home')}}" class="">
           <img src="{{asset('images/logo-dewi.png')}}"
                alt="AdminLTE Logo"
-               class="brand-image "
-               style="opacity: .8; width:10em;">
+               class=""
+               style="opacity: .8; width:10em; height:4em;">
                {{-- <span class="brand-text font-weight-light">AdminLTE 3</span> --}}
         </a>
       </div>
@@ -21,7 +33,7 @@
           <img src="{{asset('images/guest.png')}}" class="img-circle elevation-1" alt="User Image" style="width:10px">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{Auth::user()->name}}<br> </a>
+          <a href="#" class="d-block text-white">{{Auth::user()->name}}<br> </a>
         </div>
       </div>
 
