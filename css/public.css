@@ -1,5 +1,5 @@
 :root {
-  --bg-primary: #082e69;
+  --bg-primary: #e68300;
 }
 .nav-primary {
   background-color: var(--bg-primary);
@@ -27,7 +27,7 @@
 }
 #map {
   width: 100%;
-  height: 20em;
+  height: 30em;
 }
 #provinsi {
   background-color: var(--bg-primary);

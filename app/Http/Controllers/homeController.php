@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\aparatdesa;
 use App\Models\pendamping;
 use App\Models\Project;
+use App\Models\Pusat;
 use App\Models\User;
 use App\Models\wisata;
 use Illuminate\Http\Request;
@@ -72,13 +73,15 @@ class homeController extends Controller
             'project' => Project::count(),
         ];
         // return response(
-        //     pendamping::with('user.pusat')
+        //     Pusat::with('users.pendampings')
+        //         ->whereHas('users.pendampings')
         //         ->limit(3)
         //         ->get()
         // );
         return view('public.landing', [
             'count' => $count,
-            'provinsi' => DB::table('pusat')
+            'provinsi' => Pusat::with('users.pendampings')
+                ->whereHas('users.pendampings')
                 ->limit(3)
                 ->get(),
             'pendamping' => pendamping::with('user.pusat')
