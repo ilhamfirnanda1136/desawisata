@@ -21,6 +21,7 @@ use App\Http\Controllers\{
 Route::get('/', function () {
     return redirect('login');
 });
+Route::get('/landing', [homeController::class, 'landingPage']);
 
 /* Authentication Admin */
 Route::get('login', [AuthController::class, 'index']);

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\wisata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class homeController extends Controller
 {
@@ -61,5 +62,28 @@ class homeController extends Controller
             'aparat_desa' => $countAparat,
         ];
         return view('home', $data);
+    }
+
+    public function landingPage()
+    {
+        $count = [
+            'pendamping' => pendamping::count(),
+            'wisata' => wisata::count(),
+            'project' => Project::count(),
+        ];
+        // return response(
+        //     pendamping::with('user.pusat')
+        //         ->limit(3)
+        //         ->get()
+        // );
+        return view('public.landing', [
+            'count' => $count,
+            'provinsi' => DB::table('pusat')
+                ->limit(3)
+                ->get(),
+            'pendamping' => pendamping::with('user.pusat')
+                ->limit(3)
+                ->get(),
+        ]);
     }
 }

@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    apiController
-};
+use App\Http\Controllers\{apiController};
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +17,9 @@ use App\Http\Controllers\{
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('data/kota',[apiController::class,'apiKota']);
-Route::get('data/kecamatan',[apiController::class,'apiKecamatan']);
+Route::get('data/kota', [apiController::class, 'apiKota']);
+Route::get('data/kecamatan', [apiController::class, 'apiKecamatan']);
 
-Route::get('desa/wisata/{pusatid}',[apiController::class,'apiDesa']);
-Route::get('desa/pendamping',[apiController::class,'pendampingAll']);
+Route::get('desa/wisata/{pusatid}', [apiController::class, 'apiDesa']);
+Route::get('desa/pendamping', [apiController::class, 'pendampingAll']);
+Route::get('wisata', [apiController::class, 'jsonWisata'])->name('wisata');
