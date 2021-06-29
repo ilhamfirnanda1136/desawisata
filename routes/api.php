@@ -21,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('data/kota',[apiController::class,'apiKota']);
 Route::get('data/kecamatan',[apiController::class,'apiKecamatan']);
+
+Route::get('desa/wisata/{pusatid}',[apiController::class,'apiDesa']);
+Route::get('desa/pendamping',[apiController::class,'pendampingAll']);

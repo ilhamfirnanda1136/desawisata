@@ -14,4 +14,9 @@ class Pusat extends Model
     {
         return $this->hasMany(User::class,'pusat_id');
     }
+
+    public function wisata()
+    {
+        return $this->hasMany(wisata::class);
+    }
 }
