@@ -22,4 +22,5 @@ Route::get('data/kecamatan', [apiController::class, 'apiKecamatan']);
 
 Route::get('desa/wisata/{pusatid}', [apiController::class, 'apiDesa']);
 Route::get('desa/pendamping', [apiController::class, 'pendampingAll']);
+Route::get('pusat/json', [apiController::class, 'jsonPusat']);
 Route::get('wisata', [apiController::class, 'jsonWisata'])->name('wisata');

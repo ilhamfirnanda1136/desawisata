@@ -78,7 +78,7 @@ class homeController extends Controller
         //         ->limit(3)
         //         ->get()
         // );
-        return view('public.landing', [
+        return view('guest.landing', [
             'count' => $count,
             'provinsi' => Pusat::with('users.pendampings')
                 ->whereHas('users.pendampings')

@@ -22,6 +22,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 Route::get('/landing', [homeController::class, 'landingPage']);
+Route::view('/landing/provinsi', 'guest.provinsi')->name('landing.provinsi');
 
 /* Authentication Admin */
 Route::get('login', [AuthController::class, 'index']);

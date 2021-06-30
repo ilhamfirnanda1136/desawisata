@@ -8,19 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class wisata extends Model
 {
     use HasFactory;
-    protected $table ='wisata';
-    protected $fillable = ['pusat_id','nama_desa','kecamatan_id','latitude','langtitude','alamat'];
-    public function kecamatan() {
+    protected $table = 'wisata';
+    protected $fillable = [
+        'pusat_id',
+        'nama_desa',
+        'kecamatan_id',
+        'latitude',
+        'langtitude',
+        'alamat',
+    ];
+    public function kecamatan()
+    {
         return $this->belongsTo(kecamatan::class);
     }
 
     public function pusat()
     {
-        return $this->belongsTo(pusat::class);
+        return $this->belongsTo(Pusat::class);
     }
 
     public function aparatdesas()
     {
-        return $this->hasMany(aparatdesa::class,'wisata_id');
+        return $this->hasMany(aparatdesa::class, 'wisata_id');
     }
 }

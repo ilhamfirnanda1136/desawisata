@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\{wisata, pendamping};
+use App\Models\{wisata, pendamping, Pusat};
 
 class apiController extends Controller
 {
@@ -62,5 +62,14 @@ class apiController extends Controller
     public function jsonWisata()
     {
         return response(wisata::all());
+    }
+
+    public function jsonPusat()
+    {
+        return response(
+            Pusat::with('users.pendampings')
+                ->whereHas('users.pendampings')
+                ->get()
+        );
     }
 }

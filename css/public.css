@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Livvic:wght@600&display=swap');
 :root {
-  --bg-primary: #e68300;
+  --bg-primary: #082e69;
+}
+
+body {
+  font-family: 'Livvic', sans-serif;
 }
 .nav-primary {
   background-color: var(--bg-primary);
@@ -21,6 +26,10 @@
   color: white;
   font-size: 2rem;
   font-weight: bold;
+}
+#detail-provinsi {
+  margin-top: 5em;
+  padding: 2em;
 }
 #data h5 {
   font-size: 3rem;
