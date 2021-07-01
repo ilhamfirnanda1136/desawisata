@@ -21,8 +21,11 @@ use App\Http\Controllers\{
 Route::get('/', function () {
     return redirect('login');
 });
-Route::get('/landing', [homeController::class, 'landingPage']);
-Route::view('/landing/provinsi', 'guest.provinsi')->name('landing.provinsi');
+Route::get('/guest', [homeController::class, 'landingPage'])->name('guest');
+Route::view('/guest/provinsi', 'guest.provinsi')->name('landing.provinsi');
+Route::get('/guest/pendamping', [pendampingController::class, 'show'])->name(
+    'pendamping.detail'
+);
 
 /* Authentication Admin */
 Route::get('login', [AuthController::class, 'index']);

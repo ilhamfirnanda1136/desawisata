@@ -73,7 +73,7 @@
                   <div class="card-body">
                       <div class="d-flex justify-content-center flex-column">
                           <h5 class="card-title text-center text-uppercase">{{ $item->kd_name }}</h5>
-                          <a href="#" class="btn btn-primary ms-auto me-auto">Selengkapnya</a>
+                          <button class="btn btn-primary ms-auto me-auto detail" data-id="{{ $item->id }}">Selengkapnya</button>
                       </div>
                   </div>
               </div>
@@ -101,52 +101,31 @@
           </div>
       @endforeach
       <div class="d-flex justify-content-center">
-          <button class="btn btn-primary">Lihat Lainnya</button>
+          <a href="{{ route('pendamping.detail') }}" class="btn btn-primary">Lihat Lainnya</a>
       </div>
   </div>
 </section>
+</div>
+<div class="modal fade" id="my-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">List Desa Wisata</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="modal-table"></div>
+        </div>
+      </div>
+    </div>
 </div>
 @endsection
 @section('script')
 <script>
     const url = "{{ route('wisata') }}"
-    async function initMap() {
-        try {
-            const res = await fetch(url)
-            const data = await res.json()
-            const indonesia = { lat: -4.3602932248789275, lng: 122.38943196612955 }
-            const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 5,
-            center: indonesia,
-            })
-            data.forEach((item) => {
-            const marker = new google.maps.Marker({
-                position: {
-                lat: parseFloat(item.latitude),
-                lng: parseFloat(item.langtitude),
-                },
-                map: map,
-            })
-            const infoWindow = new google.maps.InfoWindow({
-                content: `
-        <p>
-            <i class="fa fa-home"></i>
-            <b>Desa : ${item.nama_desa.toUpperCase()}</b>
-        <p>
-            <i class="fa fa-home"></i>
-            <b>Alamat : ${item.alamat}</b>
-        </p>
-        `,
-            })
-            marker.addListener('click', () => {
-                infoWindow.open(map, marker)
-            })
-            })
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    const base_url = "{{ url('') }}"
 </script>
+<script src="{{ asset('js/landing/landing.js') }}"></script>
 <script
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_2JuavzZQvk6A_c1Kx9B7bRpNOHBS4DY&callback=initMap"
 async></script>

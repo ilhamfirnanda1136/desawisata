@@ -1,7 +1,15 @@
 @extends('welcome')
 @section('content')
 <section id="detail-provinsi">
-    <h3 class="text-center mb-3">Semua Provinsi</h3>
+    <div class="header bg-primary p-2 mb-3 rounded-2 shadow">
+        <div class="d-flex justify-content-between">
+            <h3 class="text-white">Semua Provinsi</h3>
+            <a href="{{ route('guest') }}" class="btn btn-success float-end">
+                <i class="bi bi-arrow-left-circle"></i>
+                Kembali
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -34,7 +42,6 @@
     
 @endsection
 @section('script')
-    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
     <script>
         const base_url = "{{ url('') }}"
     </script>

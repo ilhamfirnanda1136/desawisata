@@ -45,18 +45,25 @@ class apiController extends Controller
         return response()->json(['status' => 404]);
     }
 
-    public function pendampingAll()
+    public function pendampingAll(Request $request)
     {
-        $pendamping = pendamping::orderBy('nama_pendamping', 'asc')->paginate(
-            3
-        );
-        if ($pendamping->count() > 0) {
-            return response()->json([
-                'status' => 200,
-                'pendamping' => $pendamping,
-            ]);
+        if (!empty($request->dpd)) {
+            $pendamping = pendamping::with('user.pusat')
+                ->whereHas('user.pusat', function ($q) use ($request) {
+                    return $q->where('id', $request->filter);
+                })
+                ->orderBy('nama_pendamping', 'asc')
+                ->paginate(6);
+        } else {
+            $pendamping = pendamping::with('user.pusat')
+                ->orderBy('nama_pendamping', 'asc')
+                ->paginate(6);
         }
-        return response()->json(['status' => 404]);
+        return response()->json([
+            'status' => 200,
+            'pendamping' => $pendamping,
+        ]);
+        // return response()->json(['status' => 404]);
     }
 
     public function jsonWisata()

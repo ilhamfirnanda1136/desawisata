@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 
-use App\Models\{pendamping, User};
+use App\Models\{pendamping, Pusat, User};
 
 use DB, Auth, DataTables, Validator;
 
@@ -104,6 +104,11 @@ class pendampingController extends Controller
             'success' => $request->all(),
             'message' => $message,
         ]);
+    }
+
+    public function show()
+    {
+        return view('guest.pendamping-detail', ['pusat' => Pusat::all()]);
     }
 
     public function hapusPendamping($id)

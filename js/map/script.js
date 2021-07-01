@@ -2,7 +2,7 @@ async function initMap() {
   try {
     const res = await axios(url)
     const data = res.data
-    const indonesia = { lat: -4.3602932248789275, lng: 122.38943196612955 }
+    const indonesia = { lat: -1.4606101575093966, lng: 116.71025356048715 }
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 5,
       center: indonesia,
