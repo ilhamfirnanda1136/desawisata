@@ -17,6 +17,15 @@ use App\Http\Controllers\{
     ProjectTypeController,
     UserController
 };
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('reset', function () {
+    Artisan::call('storage:link');
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+});
 
 Route::get('/', function () {
     return redirect('login');

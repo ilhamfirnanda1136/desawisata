@@ -1,7 +1,33 @@
 @extends('welcome')
 @section('content')
-<div class="jumbotron d-flex justify-content-center align-items-center">
-    <h2>PROGRAM ASPPI KAWAL DESA WISATA 2021</h2>
+<style>
+    .wrap{
+        display: flex;
+        flex-direction: column;
+    }
+    .logo-img{
+        /* float: right; */
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 1em;
+    }
+    @media (min-width: 992px) { 
+        .logo-img{
+            margin-right: 0;
+            float: right;
+        }
+     }
+</style>
+<div class="jumbotron">
+    <div class="d-flex justify-content-center flex-column align-items-center" style="height: 100%;">
+        <div class="wrap">
+            <div class="logo-img">
+                <img src="{{ asset('images/asppi.jpg') }}" alt="" width="50" height="50">
+                <img src="{{ asset('images/kemenpar.png') }}" alt="" width="50" height="50">
+            </div>
+            <h2>PROGRAM ASPPI KAWAL DESA WISATA 2021</h2>
+        </div>
+    </div>
 </div>
 <div class="container">
 <section id="data" class="mt-4 mb-4">
@@ -94,7 +120,7 @@
                       <img src="{{ !empty($item->foto) ? 'https://dpd.asppi.or.id/foto/'.$item->foto : asset('images/person1.png') }}" class="img-rounded" width="100" height="100"  alt="">
                   </div>
                   <div class="card-bod text-center p-3">
-                      <h5 class="card-title">{{ $item->nama_pendamping }}</h5>
+                      <h5 class="card-title text-uppercase">{{ $item->nama_pendamping }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">DPD : {{ $item->user->pusat->kd_name }}</h6>
                   </div>
               </div>

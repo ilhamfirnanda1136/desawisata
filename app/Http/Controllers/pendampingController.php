@@ -15,6 +15,7 @@ class pendampingController extends Controller
     public function index()
     {
         $auth = Auth::user()->pusat_id;
+        // die();
         $response = Http::get('https://siska.asppi.or.id/api/member/' . $auth);
         return view('admin.pendamping.pendamping', [
             'member' => json_decode($response),
@@ -24,7 +25,9 @@ class pendampingController extends Controller
     public function jsonMember()
     {
         $auth = Auth::user()->pusat_id;
-        $response = Http::get('https://siska.asppi.or.id/api/member/' . $auth);
+        $response = Http::get(
+            'https://siska.asppi.or.id/api/member/' . sprintf('%02d', $auth)
+        );
         return response()->json(json_decode($response));
     }
 
@@ -108,7 +111,11 @@ class pendampingController extends Controller
 
     public function show()
     {
-        return view('guest.pendamping-detail', ['pusat' => Pusat::all()]);
+        return view('guest.pendamping-detail', [
+            'pusat' => Pusat::with('users.pendampings')
+                ->whereHas('users.pendampings')
+                ->get(),
+        ]);
     }
 
     public function hapusPendamping($id)

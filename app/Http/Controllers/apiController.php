@@ -47,10 +47,10 @@ class apiController extends Controller
 
     public function pendampingAll(Request $request)
     {
-        if (!empty($request->dpd)) {
+        if ($request->dpd) {
             $pendamping = pendamping::with('user.pusat')
                 ->whereHas('user.pusat', function ($q) use ($request) {
-                    return $q->where('id', $request->filter);
+                    return $q->where('id', $request->dpd);
                 })
                 ->orderBy('nama_pendamping', 'asc')
                 ->paginate(6);

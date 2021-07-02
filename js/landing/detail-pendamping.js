@@ -1,5 +1,4 @@
 let current_page = 1
-let last_page = 0
 function getData(page, filter) {
   return new Promise((resolve) => {
     resolve(fetch(`${base_url}/api/desa/pendamping?page=${page}&dpd=${filter}`))
@@ -9,8 +8,7 @@ function getData(page, filter) {
 async function run(page = 1, filter = '') {
   const res = await getData(page, filter)
   const data = await res.json()
-  console.log(data)
-  last_page = data.pendamping.last_page
+  localStorage.setItem('last_page', data.pendamping.last_page)
   renderCard(data.pendamping.data)
 }
 
@@ -21,7 +19,7 @@ function renderCard(data) {
     const foto =
       item.foto.length > 0
         ? `https://dpd.asppi.or.id/foto/${item.foto}`
-        : base_url + 'images/person1.png'
+        : base_url + '/images/person1.png'
     const html = `
         <div class="col-sm-12 col-md-4">
         <div class="card shadow">
@@ -42,20 +40,20 @@ function renderCard(data) {
   row.innerHTML = render
 }
 
-let index = 1
 async function firstPage() {
   run(1)
 }
 async function lastPage() {
   //   console.log(i + 1)
-  run(last_page)
+  run(localStorage.getItem('last_page'))
 }
 
+const ul = document.querySelector('.pagination')
 async function pageNumber() {
-  const res = await getData()
-  const data = await res.json()
-  const ul = document.querySelector('.pagination')
-  for (let i = 1; i < data.pendamping.last_page + 1; i++) {
+  const totalLi = document.querySelectorAll('.page-item').length
+  const li = ul.querySelector(`li:nth-child(${totalLi})`)
+  const lastPage = localStorage.getItem('last_page')
+  for (let i = 1; i < +lastPage + 1; i++) {
     const numberPage = document.createElement('li')
     numberPage.setAttribute('class', 'page-item')
     const a = document.createElement('a')
@@ -66,8 +64,7 @@ async function pageNumber() {
     const aText = document.createTextNode(i)
     a.appendChild(aText)
     numberPage.appendChild(a)
-    const totalLi = document.querySelectorAll('.page-item').length
-    const li = ul.querySelector(`li:nth-child(${totalLi})`)
+
     ul.insertBefore(numberPage, li)
   }
 }
@@ -89,20 +86,29 @@ document.addEventListener('click', (e) => {
 })
 
 const filterPusat = document.getElementById('pusat_id')
-filterPusat.addEventListener('change', (e) => {
-  console.log(e.target.value)
-  run(1, e.target.value)
-})
 const btnFilter = document.getElementById('filter')
 const btnClose = document.getElementById('button-addon2')
 const selectFilter = document.querySelector('.select-filter')
-btnFilter.addEventListener('click', (e) => {
-  selectFilter.classList.remove('hidden')
-  e.target.classList.add('hidden')
+document.addEventListener('DOMContentLoaded', () => {
+  run()
+  pageNumber()
+  filterPusat.addEventListener('change', (e) => {
+    // console.log(e.target.value)
+    run(1, e.target.value)
+    const k = document.querySelectorAll('.page-number')
+    k.forEach((item) => ul.removeChild(item.parentNode))
+    pageNumber()
+  })
+  btnFilter.addEventListener('click', (e) => {
+    selectFilter.classList.remove('hidden')
+    e.target.classList.add('hidden')
+  })
+  btnClose.addEventListener('click', () => {
+    btnFilter.classList.remove('hidden')
+    selectFilter.classList.add('hidden')
+    run(1, '')
+    const k = document.querySelectorAll('.page-number')
+    k.forEach((item) => ul.removeChild(item.parentNode))
+    pageNumber()
+  })
 })
-btnClose.addEventListener('click', () => {
-  btnFilter.classList.remove('hidden')
-  selectFilter.classList.add('hidden')
-})
-pageNumber()
-run()

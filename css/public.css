@@ -13,6 +13,7 @@ body {
   color: white !important;
 }
 .jumbotron {
+  margin-top: 4em;
   height: 70vh;
   background-image: url('../images/bg-image-kw.jpg');
   background-position: center; /* Center the image */
