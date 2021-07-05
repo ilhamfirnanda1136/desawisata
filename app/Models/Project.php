@@ -27,4 +27,12 @@ class Project extends Model
     {
         return $this->hasMany(Kegiatan::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function wisata()
+    {
+        return $this->belongsTo(wisata::class,'wisata_id');
+    }
 }

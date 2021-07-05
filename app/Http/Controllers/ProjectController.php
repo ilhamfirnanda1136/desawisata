@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class ProjectController extends Controller
 {
@@ -110,5 +111,22 @@ class ProjectController extends Controller
                 'message' => 'Internal Server Error',
             ]);
         }
+    }
+
+    public function viewPrint($id)
+    {
+        return view('admin.project.vprint',[
+            'id' => $id
+        ]);
+    }
+
+    public function print(Request $request)
+    {
+        $formatDate = fn($tgl) => date('d-m-Y',strtotime($tgl));
+        $query = Project::with(['kegiatans' => fn($q) => $q->whereBetween('tanggal',[$formatDate($request->tgl_start),$formatDate($request->tgl_berakhir)]),'wisata'])->where('id',$request->id)->first();
+        /* return response($query); */
+        return PDF::loadView('admin.project.print',[
+            'project' => $query
+        ])->setPaper('A4','potrait')->stream();
     }
 }

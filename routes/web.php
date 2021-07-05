@@ -134,6 +134,8 @@ Route::group(['middleware' => ['auth']], function () {
                 ProjectController::class,
                 'viewBoardControl',
             ])->name('project.board');
+            Route::get('/print',[ProjectController::class,'print'])->name('project.print');
+            Route::get('/print-laporan/{id}',[ProjectController::class,'viewPrint'])->name('project.print-laporan');
             Route::post('/save', [ProjectController::class, 'store']);
             Route::delete('/delete/{project}', [
                 ProjectController::class,

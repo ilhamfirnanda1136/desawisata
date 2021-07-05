@@ -31,4 +31,9 @@ class wisata extends Model
     {
         return $this->hasMany(aparatdesa::class, 'wisata_id');
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

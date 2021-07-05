@@ -69,6 +69,9 @@ class KegiatanController extends Controller
             'nama_kegiatan' => 'required',
             'keterangan' => 'required',
             'prosentase_capaian' => 'required',
+            'lokasi' => 'required',
+            'waktu_durasi' => 'required',
+            'jumlah_peserta' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -80,13 +83,7 @@ class KegiatanController extends Controller
         try {
             Kegiatan::updateOrCreate(
                 ['id' => $body['id']],
-                [
-                    'project_id' => $body['project_id'],
-                    'tanggal' => $body['tanggal'],
-                    'nama_kegiatan' => $body['nama_kegiatan'],
-                    'keterangan' => $body['keterangan'],
-                    'prosentase_capaian' => $body['prosentase_capaian'],
-                ]
+                $body
             );
             $message = !empty($body['id']) ? 'diubah' : 'ditambahkan';
             return response()->json([

@@ -82,7 +82,7 @@ class homeController extends Controller
             'count' => $count,
             'provinsi' => Pusat::with('users.pendampings')
                 ->whereHas('users.pendampings')
-                ->limit(3)
+                ->limit(6)
                 ->get(),
             'pendamping' => pendamping::with('user.pusat')
                 ->limit(3)

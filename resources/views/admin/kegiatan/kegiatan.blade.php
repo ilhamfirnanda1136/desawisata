@@ -9,10 +9,10 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title">Form Kegiatan Tanggal {{ $tgl_project }}</h3>
-                            <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                            <button type="button" onclick="window.history.back()" class="btn btn-secondary">
                                 <i class="fa fa-arrow-left"></i>
                                 Kembali
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <form action="" method="post" id="form-kegiatan" enctype="multipart/form-data">
@@ -31,18 +31,34 @@
                                     <input type="text" name="nama_kegiatan" id="nama_kegiatan" class="form-control">
                                     <div class="nama_kegiatan"></div>
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <label for="keterangan">Keterangan</label>
-                                    <textarea name="keterangan" id="keterangan" cols="5" rows="3"
-                                        class="form-control"></textarea>
-                                    <div class="keterangan"></div>
+                                <div class="form-group col-md-6">
+                                    <label for="waktu_durasi">Waktu Durasi</label>
+                                    <input type="text" name="waktu_durasi" id="waktu_durasi" class="form-control">
+                                    <div class="waktu_durasi"></div>
                                 </div>
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label for="lokasi">Lokasi</label>
+                                    <input type="text" name="lokasi" id="lokasi" class="form-control">
+                                    <div class="lokasi"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="jumlah_peserta">Jumlah Peserta</label>
+                                    <input type="text" name="jumlah_peserta" id="jumlah_peserta" class="form-control">
+                                    <div class="jumlah_peserta"></div>
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label for="prosentase_capaian">Prosantase Capaian</label>
                                     <textarea name="prosentase_capaian" id="prosentase_capaian" cols="1" rows="1"
                                         class="form-control"></textarea>
                                     <div class="prosentase_capaian"></div>
                                 </div>
+                                <div class="form-group col-md-12">
+                                    <label for="keterangan">Keterangan</label>
+                                    <textarea name="keterangan" id="keterangan" cols="5" rows="3"
+                                        class="form-control" placeholder="Deskripsi Kegiatan:&#10;Permasalahan:&#10;Solusi:&#10;"></textarea>
+                                    <div class="keterangan"></div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card-footer">

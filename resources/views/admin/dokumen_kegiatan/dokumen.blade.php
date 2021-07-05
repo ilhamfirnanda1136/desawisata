@@ -8,10 +8,10 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <h3 class="card-title">Form Dokumen</h3>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                    <button onclick="window.history.back()" class="btn btn-secondary">
                         <i class="fa fa-arrow-left"></i>
                         Kembali
-                    </a>
+                    </button>
                 </div>
             </div>
             <form action="" method="POST" enctype="multipart/form-data" id="form-dokumen">

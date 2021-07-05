@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(pendamping::class);
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+    
 }

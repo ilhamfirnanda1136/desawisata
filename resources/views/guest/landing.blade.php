@@ -20,13 +20,7 @@
 </style>
 <div class="jumbotron">
     <div class="d-flex justify-content-center flex-column align-items-center" style="height: 100%;">
-        <div class="wrap">
-            <div class="logo-img">
-                <img src="{{ asset('images/asppi.jpg') }}" alt="" width="50" height="50">
-                <img src="{{ asset('images/kemenpar.png') }}" alt="" width="50" height="50">
-            </div>
-            <h2>PROGRAM ASPPI KAWAL DESA WISATA 2021</h2>
-        </div>
+        <h2>PROGRAM ASPPI KAWAL DESA WISATA 2021</h2>
     </div>
 </div>
 <div class="container">

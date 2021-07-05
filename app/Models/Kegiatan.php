@@ -16,6 +16,9 @@ class Kegiatan extends Model
         'nama_kegiatan',
         'keterangan',
         'prosentase_capaian',
+        'waktu_durasi',
+        'jumlah_peserta',
+        'lokasi'
     ];
 
     public function laporanKeuangans()
