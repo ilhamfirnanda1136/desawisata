@@ -193,6 +193,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'destroy',
             ]);
         });
+        Route::get('/show/{kegiatan}',[KegiatanController::class,'show']);
         Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name(
             'kegiatan.index'
         );

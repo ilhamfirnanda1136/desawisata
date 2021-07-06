@@ -80,16 +80,19 @@
   </div>
 </section>
 <section id="peta">
-  <h3 class="text-uppercase text-center text-bold">peta</h3>
+  <h3 class="text-uppercase text-center text-bold">PETA SEBARAN PENDAMPINGAN ASPPI 2021</h3>
   <div id="map"></div>
 </section>
 <section id="provinsi" class="mt-3">
   <h3 class="text-uppercase text-center text-bold text-white">Provinsi</h3>
   <div class="row g-3">
       @foreach ($provinsi as $item)
+          @php
+              $image = !empty($item->image_pusat) ? asset('public/storage/'.$item->image_pusat)  : asset('images/bg-image-kw.jpg');
+          @endphp
           <div class="col-md-4 col-sm-12">
               <div class="card shadow-sm">
-                  <img src="{{ asset('images/bg-image-kw.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ $image }}" class="card-img-top" alt="...">
                   <div class="card-body">
                       <div class="d-flex justify-content-center flex-column">
                           <h5 class="card-title text-center text-uppercase">{{ $item->kd_name }}</h5>

@@ -16,6 +16,7 @@ class Project extends Model
         'nilai_pagu_project',
         'tgl_start',
         'tgl_finish',
+        'wisata_id'
     ];
 
     public function projectType()

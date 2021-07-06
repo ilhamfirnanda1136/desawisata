@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DokumenKegiatan;
-use App\Models\FileDokumenKegiatan;
 use App\Models\Kegiatan;
-use App\Models\LaporanKeuangan;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -93,6 +89,11 @@ class KegiatanController extends Controller
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
+    }
+
+    public function show(Kegiatan $kegiatan)
+    {
+        return response()->json($kegiatan);
     }
 
     /**

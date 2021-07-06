@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\Project;
 use App\Models\ProjectType;
+use App\Models\wisata;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,7 @@ class ProjectController extends Controller
     {
         return view('admin.project.project', [
             'project_types' => ProjectType::all(),
+            'wisata' => wisata::where('pusat_id',auth()->user()->pusat_id)->get()
         ]);
     }
 
@@ -32,7 +34,7 @@ class ProjectController extends Controller
 
     public function jsonDT()
     {
-        $query = Project::with('projectType')->latest('id');
+        $query = Project::with('projectType')->where('user_id',auth()->user()->id)->latest('id');
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn(

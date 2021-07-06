@@ -58,6 +58,16 @@
               <div class="nama_project"></div>
             </div>
             <div class="col-12 form-group">
+              <label>Desa Wisata</label>
+              <select name="wisata_id" id="wisata_id" class="form-control select2">
+                <option value="" selected disabled>-Pilih-</option>
+                @foreach ($wisata as $item)
+                  <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                @endforeach
+              </select>
+              <div class="type_project_id"></div>
+            </div>
+            <div class="col-12 form-group">
               <label>Jenis Proyek</label>
               <select name="type_project_id" id="type_project_id" class="form-control select2">
                 <option value="" selected disabled>-Pilih-</option>
