@@ -63,4 +63,60 @@ const handleDetail = (e) => {
     // }).forceRender()
   }
 }
+async function detailPendamping(e) {
+  if (e.target.classList.contains('detail-pendamping')) {
+    const myModal = new bootstrap.Modal(document.getElementById('my-modal'), {
+      backdrop: true,
+    })
+    myModal.show()
+    document.querySelector('.modal-title').innerText = 'Detail Pendamping'
+    const id = e.target.dataset.id
+    try {
+      const res = await fetch(`${base_url}/guest/detail-pendamping/${id}`)
+      const data = await res.json()
+      const foto =
+        data.foto.length > 0
+          ? `https://dpd.asppi.or.id/foto/${data.foto}`
+          : base_url + '/images/person1.png'
+      const html = `
+      <div class="table-responsive">
+        <table class="table table-striped">
+        <tr>
+            <td colspan="3" class="text-center bg-white">
+              <img src="${foto}" class="img-rounded" width="100" height="100"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Nama</th>
+            <td>:</td>
+            <td>${data.nama_pendamping}</td>
+          </tr>
+          <tr>
+            <th>DPD</th>
+            <td>:</td>
+            <td>${data.user.pusat.kd_name}</td>
+          </tr>
+          <tr>
+            <th>Desa</th>
+            <td>:</td>
+            <td>${data.wisata !== null ? data.wisata.nama_desa : '-'}</td>
+          </tr>
+          <tr>
+            <th>Alamat Desa</th>
+            <td>:</td>
+            <td style="word-wrap:break-word;">${
+              data.wisata !== null ? data.wisata.alamat : '-'
+            }</td>
+          </tr>
+        </table>
+      </div>
+      `
+      document.querySelector('.modal-body').innerHTML = html
+      console.log(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+document.addEventListener('click', detailPendamping)
 document.addEventListener('click', handleDetail)

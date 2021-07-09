@@ -12,6 +12,7 @@ class pendamping {
     namaPendamping: '#nama_pendamping',
     editIdPendamping: '#edit_id_pendamping',
     editNamaPendamping: '#edit_nama_pendamping',
+    editWisataId: '#edit_wisata_id',
     editStatus: '#edit_status',
     tablePendamping: '#table-pendamping',
     formPendamping: '#formPendamping',
@@ -113,16 +114,17 @@ class pendamping {
     $(this.DOMStrings.editIdPendamping).val(event.data('idanggota'))
     $(this.DOMStrings.editNamaPendamping).val(event.data('nama'))
     $(this.DOMStrings.editStatus).val(event.data('status'))
+    $(this.DOMStrings.editWisataId).val(event.data('wisata_id'))
     $(this.DOMStrings.modalEdit).modal({ backdrop: 'static' })
   }
 
   static simpanPendamping = async (menu, edit = false) => {
     loading()
-    // const form =
-    //   menu === 'tambah'
-    //     ? document.querySelector(this.DOMStrings.formPendamping)
-    //     : document.querySelector(this.DOMStrings.formEditPendamping)
-    const form = document.querySelector(this.DOMStrings.formPendamping)
+    const form =
+      menu === 'tambah'
+        ? document.querySelector(this.DOMStrings.formPendamping)
+        : document.querySelector(this.DOMStrings.formEditPendamping)
+    // const form = document.querySelector(this.DOMStrings.formPendamping)
     const formData = new FormData(form)
     const url = process_env_url + '/simpan/pendamping'
     try {

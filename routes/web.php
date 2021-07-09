@@ -35,6 +35,10 @@ Route::view('/guest/provinsi', 'guest.provinsi')->name('landing.provinsi');
 Route::get('/guest/pendamping', [pendampingController::class, 'show'])->name(
     'pendamping.detail'
 );
+Route::get('/guest/detail-pendamping/{id}', [
+    pendampingController::class,
+    'detailPendamping',
+]);
 
 /* Authentication Admin */
 Route::get('login', [AuthController::class, 'index']);
@@ -134,8 +138,13 @@ Route::group(['middleware' => ['auth']], function () {
                 ProjectController::class,
                 'viewBoardControl',
             ])->name('project.board');
-            Route::get('/print',[ProjectController::class,'print'])->name('project.print');
-            Route::get('/print-laporan/{id}',[ProjectController::class,'viewPrint'])->name('project.print-laporan');
+            Route::get('/print', [ProjectController::class, 'print'])->name(
+                'project.print'
+            );
+            Route::get('/print-laporan/{id}', [
+                ProjectController::class,
+                'viewPrint',
+            ])->name('project.print-laporan');
             Route::post('/save', [ProjectController::class, 'store']);
             Route::delete('/delete/{project}', [
                 ProjectController::class,
@@ -193,7 +202,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'destroy',
             ]);
         });
-        Route::get('/show/{kegiatan}',[KegiatanController::class,'show']);
+        Route::get('/show/{kegiatan}', [KegiatanController::class, 'show']);
         Route::get('/{id}/{date}', [KegiatanController::class, 'index'])->name(
             'kegiatan.index'
         );

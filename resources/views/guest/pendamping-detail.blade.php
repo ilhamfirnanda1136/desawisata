@@ -36,7 +36,19 @@
         </ul>
     </nav>
 </section>
-    
+<div class="modal fade" id="my-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">List Desa Wisata</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="modal-table"></div>
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
 @section('script')
     <script>

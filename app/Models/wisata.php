@@ -36,4 +36,8 @@ class wisata extends Model
     {
         return $this->hasMany(Project::class);
     }
+    public function pendampings()
+    {
+        return $this->hasMany(pendamping::class);
+    }
 }

@@ -116,9 +116,10 @@
                   <div class="d-flex justify-content-center p-4">
                       <img src="{{ !empty($item->foto) ? 'https://dpd.asppi.or.id/foto/'.$item->foto : asset('images/person1.png') }}" class="img-rounded" width="100" height="100"  alt="">
                   </div>
-                  <div class="card-bod text-center p-3">
+                  <div class="card-body text-center p-3">
                       <h5 class="card-title text-uppercase">{{ $item->nama_pendamping }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">DPD : {{ $item->user->pusat->kd_name }}</h6>
+                    <button class="btn btn-primary detail-pendamping" data-id="{{ $item->id }}">Detail</button>
                   </div>
               </div>
           </div>
@@ -130,7 +131,7 @@
 </section>
 </div>
 <div class="modal fade" id="my-modal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">List Desa Wisata</h5>

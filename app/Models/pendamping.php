@@ -16,6 +16,7 @@ class pendamping extends Model
         'user_id',
         'id_anggota',
         'pusat_id',
+        'wisata_id',
         'nama_pendamping',
         'notelp',
         'alamat',
@@ -49,5 +50,9 @@ class pendamping extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function wisata()
+    {
+        return $this->belongsTo(wisata::class, 'wisata_id');
     }
 }

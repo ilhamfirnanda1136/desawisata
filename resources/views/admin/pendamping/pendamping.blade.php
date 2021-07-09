@@ -18,7 +18,7 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-6 anggota">
+                                    <div class="form-group col-md-4 anggota">
                                         <label for="nama">Anggota *</label>
                                         <button type="button" class="btn btn-success btn-sm " id="btn-tambah-anggota"><i
                                                 class="fa fa-search"></i></button>
@@ -27,13 +27,23 @@
                                         <input type="hidden" name="id_pendamping" id="id_pendamping">
                                         <small class="text-danger nama_pendamping"></small>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Status *</label>
                                         <select name="status" id="status" class="form-control">
                                             <option value="1">Pendamping</option>
                                             <option value="2">Koordinator</option>
                                         </select>
                                         <small class="text-danger status"></small>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="wisata_id">Desa Wisata</label>
+                                        <select name="wisata_id" id="wisata_id" class="form-control">
+                                            <option value="">-Pilih-</option>
+                                            @foreach ($wisata as $item)
+                                                <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                                            @endforeach
+                                        </select>
+                                        <small class="text-danger wisata_id"></small>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +133,17 @@
                             <option value="2">Koordinator</option>
                         </select>
                         <small class="text-danger edit_status"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="wisata_id">Desa Wisata</label>
+                        <select name="wisata_id" id="edit_wisata_id" class="form-control">
+                            <option value="">-Pilih-</option>
+                            @foreach ($wisata as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                            @endforeach
+                        </select>
+                        <small class="text-danger edit_wisata_id"></small>
+
                     </div>
                 </div>
                 <div class="modal-footer">

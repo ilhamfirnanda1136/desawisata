@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 
-use App\Models\{pendamping, Pusat, User};
+use App\Models\{pendamping, Pusat, User, wisata};
 
 use DB, Auth, DataTables, Validator;
 
@@ -14,11 +14,14 @@ class pendampingController extends Controller
 {
     public function index()
     {
-        $auth = Auth::user()->pusat_id;
-        // die();
-        $response = Http::get('https://siska.asppi.or.id/api/member/' . $auth);
+        // $auth = Auth::user()->pusat_id;
+        // // die();
+        // $response = Http::get('https://siska.asppi.or.id/api/member/' . $auth);
         return view('admin.pendamping.pendamping', [
-            'member' => json_decode($response),
+            'wisata' => wisata::where(
+                'pusat_id',
+                auth()->user()->pusat_id
+            )->get(),
         ]);
     }
 
@@ -97,6 +100,7 @@ class pendampingController extends Controller
             'ktp' => $member->no_ktp,
             'status' => $request->status,
             'foto' => $member->foto,
+            'wisata_id' => $request->wisata_id,
         ];
         pendamping::updateOrCreate(['id' => $request->id], $data);
         $message =
@@ -116,6 +120,12 @@ class pendampingController extends Controller
                 ->whereHas('users.pendampings')
                 ->get(),
         ]);
+    }
+
+    public function detailPendamping($id)
+    {
+        $data = pendamping::with(['wisata', 'user.pusat'])->find($id);
+        return response($data);
     }
 
     public function hapusPendamping($id)
