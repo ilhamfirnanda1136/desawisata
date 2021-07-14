@@ -137,7 +137,7 @@
                     <div class="form-group">
                         <label for="wisata_id">Desa Wisata</label>
                         <select name="wisata_id" id="edit_wisata_id" class="form-control">
-                            <option value="">-Pilih-</option>
+                            <option value="" selected disabled>-Pilih-</option>
                             @foreach ($wisata as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
                             @endforeach

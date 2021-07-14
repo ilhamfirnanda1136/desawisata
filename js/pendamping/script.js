@@ -114,7 +114,7 @@ class pendamping {
     $(this.DOMStrings.editIdPendamping).val(event.data('idanggota'))
     $(this.DOMStrings.editNamaPendamping).val(event.data('nama'))
     $(this.DOMStrings.editStatus).val(event.data('status'))
-    $(this.DOMStrings.editWisataId).val(event.data('wisata_id'))
+    $(this.DOMStrings.editWisataId).val(event.data('wisata'))
     $(this.DOMStrings.modalEdit).modal({ backdrop: 'static' })
   }
 
